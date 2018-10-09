@@ -16,5 +16,9 @@ C:\Users\[YourName]\Appdata\Roaming\npm
 
 You can check that you have everything installed by running npm -v and node -v. Start the project by running the following command in the plan-your-life directory: 
 
-node server.js 
+ng serve --open
+
+Run the server program by running the following command in a separate terminal. You will also need to be in the plan-your-life directory for this. 
+
+node server.js
 
