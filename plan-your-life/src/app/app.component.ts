@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
-import { UserPrompt } from './user-prompt';
+import { UserPromptComponent } from './user-prompt/user-prompt.component';
+
+//import { UserPrompt } from './userprompt';
 
 @Component({
   selector: 'app-root',
