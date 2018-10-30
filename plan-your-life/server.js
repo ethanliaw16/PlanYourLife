@@ -1,4 +1,5 @@
 var http = require('http');
+var pylApi = require('./Server/PlanYourLife-API/plan-your-life-api');
 var path = require('path');
 var bodyParser = require('body-parser');
 var cors = require('cors');
@@ -19,7 +20,7 @@ app.all('/', function(req, res, next){
 
 app.use(cors(corsOptions));
 
-app.use('/api', function(req,res){});
+app.use('/api', pylApi);
 
 app.get('*', function(req,res){});
 
