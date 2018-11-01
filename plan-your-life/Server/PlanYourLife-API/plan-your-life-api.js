@@ -5,10 +5,10 @@ router = express.Router();
 
 
 router.post('/newquery', function(req, res){
-
-  queryhandler.processQuery(req.body);
+  console.log('body at api layer: ' + req.body);
+  queryhandler.processquery(req.body, res);
   res.send('reached api layer on new query.');
-});
+  });
 
 router.get('/lists', function(req, res){
   console.log('reached api layer for list retrieval.');

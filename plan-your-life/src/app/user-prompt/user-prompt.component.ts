@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { PylService } from '../planyourlife.service';
 import { HttpClient } from '@angular/common/http';
+import { Query } from '../Query';
 
 @Component({
   selector: 'app-user-prompt',
@@ -17,13 +18,16 @@ export class UserPromptComponent implements OnInit {
 
   Lists: String[];
 
-  query: String;
+  query: Query;
 
   logSubmit(){
     console.log("Query Entered successfully.");
   }
 
-  sendQuery(query: String): void{
+  sendQuery(text: string): void{
+
+    var query = new Query();
+    query.text = text;
     console.log("Query recieved, " + query);
     this.pylService.sendNewQuery(query);
   }

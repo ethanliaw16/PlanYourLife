@@ -6,6 +6,7 @@ var cors = require('cors');
 var express = require('express')
 var app = express()
 
+app.use(bodyParser.json());
 
 var corsOptions = {
   origin: '*',

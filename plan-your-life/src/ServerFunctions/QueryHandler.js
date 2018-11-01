@@ -1,7 +1,7 @@
 
-module.exports = {
-  processQuery(query){
-    console.log('Reached the query handler.');
-    console.log(query);
+module.exports.processquery = processQuery;
+
+
+function processQuery(query, res){
+    console.log('Reached the query handler. ' + query.text);
   }
-}

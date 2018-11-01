@@ -19,4 +19,5 @@ import { UserPromptComponent } from './user-prompt/user-prompt.component';
   providers: [],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {
+construcor(){} }
