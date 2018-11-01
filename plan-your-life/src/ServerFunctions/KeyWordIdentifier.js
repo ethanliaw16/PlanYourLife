@@ -4,20 +4,23 @@ Testing class
 */
 
 // Prompt object
-//var prompt = require('prompt');
+var prompt = require('prompt');
 
 var keywords = [];
 
 var keys = [];
 var keyValues = [];
 
+var summary = '';
+var location = '';
+
 /*
 Current means to get user input until front end integration is complete
 */
-/*prompt.start();
+prompt.start();
 prompt.get(['command'], function (err, result) {
 	KWI(result.command);
-});*/
+});
 
 /*
 Currently not implemented
@@ -37,7 +40,11 @@ function KWI(command){
 	command = command.toLowerCase();
 	command = command.split(' ');
 	extractCache(command);
-	return createJSON();
+	returnValueA = createJSON();
+	updateEvents();
+	returnValueB = createEvent();
+	console.log(returnValueB);
+	return returnValueA;
 }
 
 /*
@@ -48,6 +55,8 @@ function getKeyWords(){
 	keywords.push('remind');
 	keywords.push('add');
 	keywords.push('to');
+	keywords.push('at');
+	keywords.push('on');
 }
 
 /*
@@ -83,9 +92,32 @@ function createJSON(){
 	JSON = JSON + '}';
 	console.log(JSON);
 	return JSON;
-	`{
-		"destination"   +
-	}`
+}
+
+function updateEvents(){
+	for(i = 1; i < keys.length; i++){
+		if(keys[i] === 'remind'){
+			summary = keyValues[i];
+		} else if(keys[i] === 'at'){
+			location = keyValues[i];
+		} else {
+			console.log('Out of key words');
+		}
+	}
+}
+
+function createEvent(){
+	var event = {
+		'summary': summary,
+		'location': location,
+		'start': {
+		  'date': '2018-11-1',
+		},
+		'end': {
+		  'date': '2018-11-1',
+		},
+	};
+	return event;
 }
 
 module.exports.KWI = KWI;
