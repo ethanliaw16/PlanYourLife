@@ -5,7 +5,7 @@ router = express.Router();
 
 
 router.post('/newquery', function(req, res){
-  console.log('body at api layer: ' + req.body);
+  //console.log('body at api layer: ' + req.body);
   queryhandler.processquery(req.body, res);
   res.send('reached api layer on new query.');
   });
