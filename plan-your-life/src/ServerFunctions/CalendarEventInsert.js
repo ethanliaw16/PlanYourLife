@@ -8,12 +8,29 @@ const {google} = require('googleapis');
 const SCOPES = ['https://www.googleapis.com/auth/calendar'];
 const TOKEN_PATH = 'token.json';
 
+//hard coded event json
+var event = {
+  'summary': 'Work Meeting',
+  'location': 'Case Western Reserve University',
+  'description': 'This is a demo.',
+  'start': {
+    'dateTime': '2018-11-3T09:00:00-07:00',
+    'timeZone': 'America/New_York',
+  },
+  'end': {
+    'dateTime': '2018-11-3T17:00:00-07:00',
+    'timeZone': 'America/New_York',
+  },
+};
+
 // Load client secrets from a local file.
 fs.readFile('credentials.json', (err, content) => {
   if (err) return console.log('Error loading client secret file:', err);
   // Authorize a client with credentials, then call the Google Calendar API.
   authorize(JSON.parse(content), listEvents);
 });
+
+insertEvents;
 
 /**
  * Create an OAuth2 client with the given credentials, and then execute the
@@ -98,33 +115,22 @@ function listEvents(auth) {
       console.log('No upcoming events found.');
     }
   });
-
-var event = {
-  'summary': 'Work Meeting',
-  'location': 'Case Western Reserve University',
-  'description': 'This is a demo.',
-  'start': {
-    'dateTime': '2018-11-2T09:00:00-07:00',
-    'timeZone': 'America/New_York',
-  },
-  'end': {
-    'dateTime': '2018-11-2T17:00:00-07:00',
-    'timeZone': 'America/New_York',
-  },
-};
-
-calendar.events.insert({
-  auth: auth,
-  calendarId: 'primary',
-  resource: event,
-}, function(err, event) {
-  if (err) {
-    console.log('There was an error contacting the Calendar service: ' + err);
-    return;
-  }
-  console.log('Event created: %s', event.htmlLink);
-});
 }
+
+function insertEvents(event) {
+  calendar.events.insert({
+    auth: auth,
+    calendarId: 'primary',
+    resource: event,
+  }, function(err, event) {
+    if (err) {
+      console.log('There was an error contacting the Calendar service: ' + err);
+      return;
+    }
+    console.log('Event created: %s', event.htmlLink);
+  });
+}
+
 
 
 
