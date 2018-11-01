@@ -14,11 +14,11 @@ var event = {
   'location': 'Case Western Reserve University',
   'description': 'This is a demo.',
   'start': {
-    'dateTime': '2018-11-3T09:00:00-07:00',
+    'dateTime': '2018-11-2T09:00:00-07:00',
     'timeZone': 'America/New_York',
   },
   'end': {
-    'dateTime': '2018-11-3T17:00:00-07:00',
+    'dateTime': '2018-11-2T17:00:00-07:00',
     'timeZone': 'America/New_York',
   },
 };
@@ -94,6 +94,21 @@ function getAccessToken(oAuth2Client, callback) {
  */
 function listEvents(auth) {
   const calendar = google.calendar({version: 'v3', auth});
+  
+  //This code will be in an insert function that takes in the event as a parameter
+  calendar.events.insert({
+    auth: auth,
+    calendarId: 'primary',
+    resource: event,
+  }, function(err, event) {
+    if (err) {
+      console.log('There was an error contacting the Calendar service: ' + err);
+      return;
+    }
+    console.log('Event created: %s', event.htmlLink);
+  });
+
+
   calendar.events.list({
     calendarId: 'primary',
     timeMin: (new Date()).toISOString(),
@@ -113,20 +128,8 @@ function listEvents(auth) {
       console.log('No upcoming events found.');
     }
   });
-
-  //This code will be in an insert function that takes in the event as a parameter
-  calendar.events.insert({
-    auth: auth,
-    calendarId: 'primary',
-    resource: event,
-  }, function(err, event) {
-    if (err) {
-      console.log('There was an error contacting the Calendar service: ' + err);
-      return;
-    }
-    console.log('Event created: %s', event.htmlLink);
-  });
 }
+  
 
 
   
