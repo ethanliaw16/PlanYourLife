@@ -3,7 +3,7 @@ var pylApi = require('./Server/PlanYourLife-API/plan-your-life-api');
 var path = require('path');
 var bodyParser = require('body-parser');
 var cors = require('cors');
-var express = require('express')
+var express = require('express');
 var app = express()
 
 app.use(bodyParser.json());

@@ -4,7 +4,7 @@ Testing class
 */
 
 // Prompt object
-var prompt = require('prompt');
+//var prompt = require('prompt');
 
 var keywords = [];
 
@@ -84,7 +84,7 @@ function createJSON(){
 	console.log(JSON);
 	return JSON;
 	`{
-		"destination"   + 
+		"destination"   +
 	}`
 }
 
