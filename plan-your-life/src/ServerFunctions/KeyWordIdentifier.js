@@ -4,7 +4,7 @@ Testing class
 */
 
 // Prompt object
-var prompt = require('prompt');
+//var prompt = require('prompt');
 
 var keywords = [];
 
@@ -16,7 +16,7 @@ var location = '';
 
 /*
 Current means to get user input until front end integration is complete
-*/
+
 prompt.start();
 prompt.get(['command'], function (err, result) {
 	KWI(result.command);
