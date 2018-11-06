@@ -4,15 +4,26 @@ Testing class
 */
 
 // Prompt object
-//var prompt = require('prompt');
+// var prompt = require('prompt');
 
 var keywords = [];
 
 var keys = [];
 var keyValues = [];
 
-var summary = '';
-var location = '';
+// The following variables hold the values of the JSON file
+var add = 'false';
+var download = 'false';
+var remind = 'false';
+var remove = 'false';
+// Used with Tasks
+var destination = '';
+var item = '';
+// Used with Calendar
+var time = '';
+var where = '';
+var event = '';
+var duration = '';
 
 /*
 Current means to get user input until front end integration is complete
@@ -40,11 +51,10 @@ function KWI(command){
 	command = command.toLowerCase();
 	command = command.split(' ');
 	extractCache(command);
-	returnValueA = createJSON();
-	updateEvents();
-	returnValueB = createEvent();
-	console.log(returnValueB);
-	return returnValueA;
+	updateJSON();
+	userEvent = createEvent();
+	console.log(userEvent);
+	return userEvent;
 }
 
 /*
@@ -52,10 +62,15 @@ Pulls the key words from the server.
 Currently just populates the keywords array until back end integration is complete
 */
 function getKeyWords(){
-	keywords.push('remind');
 	keywords.push('add');
+	keywords.push('download');
+	keywords.push('remind me to');
+	keywords.push('remind');
+	keywords.push('remove');
 	keywords.push('to');
 	keywords.push('at');
+	keywords.push('from');
+	keywords.push('for');
 	keywords.push('on');
 }
 
@@ -84,22 +99,29 @@ function extractCache(command){
 	console.log('keyValues: ' + keyValues);
 }
 
-function createJSON(){
-	var JSON = '{';
-	for (i = 1; i < keys.length; i++){
-		JSON = JSON + keys[i] + ' : ' + keyValues[i] + ',';
-	}
-	JSON = JSON + '}';
-	console.log(JSON);
-	return JSON;
-}
-
-function updateEvents(){
+// Goes through the extracted cache and assigns the JSON values the correct values
+function updateJSON(){
 	for(i = 1; i < keys.length; i++){
-		if(keys[i] === 'remind'){
-			summary = keyValues[i];
-		} else if(keys[i] === 'at'){
-			location = keyValues[i];
+		if(keys[i] === 'add'){
+			add = 'true';
+			item = keyValues[i];
+		} else if(keys[i] === 'download'){ // Only implemented for downloading lists
+			download = 'true';
+			destination = keyValues[i];
+		} else if(keys[i] === 'remind' || keys[i] === 'remind me to'){ 
+			remind = 'true';
+			event = keyValues[i];
+		} else if(keys[i] === 'remove'){
+			remove = 'true';
+			item = keyValues[i];
+		} else if(keys[i] === 'to'){
+			destination = keyValues[i];
+		} else if(keys[i] === 'at' || keys[i] === 'on'){
+			time = keyValues[i];
+		} else if(keys[i] === 'from'){
+			where = keyValues[i];
+		} else if(keys[i] === 'for'){
+			duration = keyValues[i];
 		} else {
 			console.log('Out of key words');
 		}
@@ -107,20 +129,19 @@ function updateEvents(){
 }
 
 function createEvent(){
-	var event = {
-		'summary': summary,
-		'location': location,
-		'start': {
-		  'date': '2018-11-1',
-		},
-		'end': {
-		  'date': '2018-11-1',
-		},
+	var newEvent = {
+		'add': add,
+		'download': download,
+		'remind': remind,
+		'remove': remove,
+		'destination': destination,
+		'item': item,
+		'time': time,
+		'where': where,
+		'event': event,
+		'duration': duration,
 	};
-	return event;
+	return newEvent;
 }
 
 module.exports.KWI = KWI;
-module.exports.extractCache = extractCache;
-module.exports.getKeyWords = getKeyWords;
-module.exports.createJSON = createJSON;
