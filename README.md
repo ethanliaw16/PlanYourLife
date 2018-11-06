@@ -11,6 +11,10 @@ The Base project files are now in the repo. In order to run the project, you wil
 
 npm install -g @angular/cli
 
+You will also need to install express. Again, from the command line, enter the following:
+
+npm install express
+
 You will probably need to modify your system variables as well. Under your path, add the following: 
 C:\Users\[YourName]\Appdata\Roaming\npm
 
