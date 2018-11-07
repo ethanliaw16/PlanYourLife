@@ -1,33 +1,16 @@
-//test google calendar code
-
 const fs = require('fs');
 const readline = require('readline');
 const {google} = require('googleapis');
 
 // If modifying these scopes, delete token.json.
-const SCOPES = ['https://www.googleapis.com/auth/calendar'];
+const SCOPES = ['https://www.googleapis.com/auth/tasks.readonly'];
 const TOKEN_PATH = 'token.json';
-
-//hard coded event json
-var event = {
-  'summary': 'Work Meeting',
-  'location': 'Case Western Reserve University',
-  'description': 'This is a demo.',
-  'start': {
-    'dateTime': '2018-11-2T09:00:00-07:00',
-    'timeZone': 'America/New_York',
-  },
-  'end': {
-    'dateTime': '2018-11-2T17:00:00-07:00',
-    'timeZone': 'America/New_York',
-  },
-};
 
 // Load client secrets from a local file.
 fs.readFile('credentials.json', (err, content) => {
   if (err) return console.log('Error loading client secret file:', err);
-  // Authorize a client with credentials, then call the Google Calendar API.
-  authorize(JSON.parse(content), listEvents);
+  // Authorize a client with credentials, then call the Google Tasks API.
+  authorize(JSON.parse(content), listTaskLists);
 });
 
 /**
@@ -43,7 +26,7 @@ function authorize(credentials, callback) {
 
   // Check if we have previously stored a token.
   fs.readFile(TOKEN_PATH, (err, token) => {
-    if (err) return getAccessToken(oAuth2Client, callback);
+    if (err) return getNewToken(oAuth2Client, callback);
     oAuth2Client.setCredentials(JSON.parse(token));
     callback(oAuth2Client);
   });
@@ -55,7 +38,7 @@ function authorize(credentials, callback) {
  * @param {google.auth.OAuth2} oAuth2Client The OAuth2 client to get token for.
  * @param {getEventsCallback} callback The callback for the authorized client.
  */
-function getAccessToken(oAuth2Client, callback) {
+function getNewToken(oAuth2Client, callback) {
   const authUrl = oAuth2Client.generateAuthUrl({
     access_type: 'offline',
     scope: SCOPES,
@@ -80,61 +63,25 @@ function getAccessToken(oAuth2Client, callback) {
   });
 }
 
-// Steps to take to make events:
-// Refer to the Node.js quickstart on how to setup the environment:
-// https://developers.google.com/calendar/quickstart/node
-// Change the scope to 'https://www.googleapis.com/auth/calendar' and delete any
-// stored credentials.
-
-
-
 /**
- * Lists the next 10 events on the user's primary calendar.
+ * Lists the user's first 10 task lists.
+ *
  * @param {google.auth.OAuth2} auth An authorized OAuth2 client.
  */
-function listEvents(auth) {
-  const calendar = google.calendar({version: 'v3', auth});
-  
-  //This code will be in an insert function that takes in the event as a parameter
-  calendar.events.insert({
-    auth: auth,
-    calendarId: 'primary',
-    resource: event,
-  }, function(err, event) {
-    if (err) {
-      console.log('There was an error contacting the Calendar service: ' + err);
-      return;
-    }
-    console.log('Event created: %s', event.htmlLink);
-  });
-
-
-  calendar.events.list({
-    calendarId: 'primary',
-    timeMin: (new Date()).toISOString(),
+function listTaskLists(auth) {
+  const service = google.tasks({version: 'v1', auth});
+  service.tasklists.list({
     maxResults: 10,
-    singleEvents: true,
-    orderBy: 'startTime',
   }, (err, res) => {
-    if (err) return console.log('The API returned an error: ' + err);
-    const events = res.data.items;
-    if (events.length) {
-      //console.log('Upcoming 10 events:');
-      events.map((event, i) => {
-        const start = event.start.dateTime || event.start.date;
-        console.log(`${start} - ${event.summary}`);
+    if (err) return console.error('The API returned an error: ' + err);
+    const taskLists = res.data.items;
+    if (taskLists) {
+      console.log('Task lists:');
+      taskLists.forEach((taskList) => {
+        console.log(`${taskList.title} (${taskList.id})`);
       });
     } else {
-      //console.log('No upcoming events found.');
+      console.log('No task lists found.');
     }
   });
 }
-  
-
-
-  
-
-
-
-
-
