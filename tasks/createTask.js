@@ -10,7 +10,7 @@ const TOKEN_PATH = 'token.json';
 fs.readFile('credentials.json', (err, content) => {
   if (err) return console.log('Error loading client secret file:', err);
   // Authorize a client with credentials, then call the Google Tasks API.
-  authorize(JSON.parse(content), insertTaskList);
+  authorize(JSON.parse(content), insertTask);
 });
 
 /**
@@ -63,8 +63,9 @@ function getNewToken(oAuth2Client, callback) {
   });
 }
 
-var tasklist = {
-  'title': 'New Task List',
+var task = {
+  'title': 'Cookies',
+  'notes': 'Me want cookie',
 }
 
 /**
@@ -72,14 +73,16 @@ var tasklist = {
  *
  * @param {google.auth.OAuth2} auth An authorized OAuth2 client.
  */
-function insertTaskList(auth) {
+function insertTask(auth) {
   const service = google.tasks({version: 'v1', auth});
-  service.tasklists.insert({
-    resource: tasklist,
+  service.tasks.insert({
+    auth: auth,
+    tasklist: '@Groceries',
+    resource: task,
   }, (err, res) => {
     if (err) return console.error('The API returned an error: ' + err);
     else {
-      console.log('Task list created.');
+      console.log('Task created.');
     }
   });
 }
