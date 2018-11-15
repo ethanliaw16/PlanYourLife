@@ -24,6 +24,7 @@
     "cors": "^2.8.4",
     "express": "^4.16.4",
     "fullcalendar": "^3.9.0",
+    "googleapis": "^27.0.0",
     "rxjs": "~6.2.0",
     "zone.js": "~0.8.26"
   },

@@ -63,7 +63,7 @@ function resetFields(){
 }
 
 /*
-Function that identifiese keywords of command and sends a JSON file to backend for API calls requests.
+Function that identifies keywords of command and sends a JSON file to backend for API calls requests.
 Done through helper method
 s*/
 function KWI(command){
