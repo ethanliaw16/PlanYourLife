@@ -1,6 +1,5 @@
 /*
 By: Christian Bonnell
-Testing class
 */
 
 // Prompt object
@@ -33,6 +32,8 @@ prompt.get(['command'], function (err, result) {
 	KWI(result.command);
 });
 
+// Following 
+
 /*
 Currently not implemented
 Will communicate with front end to grab the users input and pass it to KWI
@@ -43,17 +44,37 @@ function getInput(command){
 }
 
 /*
+Function sets the fields to a specific value for testing purposes.
+*/	
+function resetFields(){
+	keywords = [];
+	keys = [];
+	keyValues = [];
+	add = 'false';
+	download = 'false';
+	remind = 'false';
+	remove = 'false';
+	destination = '';
+	item = '';
+	time = '';
+	where = '';
+	event = '';
+	duration = '';
+}
+
+/*
 Function that identifiese keywords of command and sends a JSON file to backend for API calls requests.
 Done through helper method
 s*/
 function KWI(command){
+	resetFields();
 	getKeyWords();
 	command = command.toLowerCase();
 	command = command.split(' ');
 	extractCache(command);
 	updateJSON();
 	userEvent = createEvent();
-	console.log(userEvent);
+	// console.log(userEvent);
 	return userEvent;
 }
 
@@ -93,14 +114,15 @@ function extractCache(command){
 		}
 	});
 	// Pushes the last keyword and value on to the arrays
-	keys.push(keyword);
-	keyValues.push(values);
-	console.log('keys: ' + keys);
-	console.log('keyValues: ' + keyValues);
+	keys.push(keyword.trim());
+	keyValues.push(values.trim());
+	// console.log('keys: ' + keys);
+	// console.log('keyValues: ' + keyValues);
 }
 
 // Goes through the extracted cache and assigns the JSON values the correct values
 function updateJSON(){
+
 	for(i = 1; i < keys.length; i++){
 		if(keys[i] === 'add'){
 			add = 'true';
@@ -108,7 +130,7 @@ function updateJSON(){
 		} else if(keys[i] === 'download'){ // Only implemented for downloading lists
 			download = 'true';
 			destination = keyValues[i];
-		} else if(keys[i] === 'remind' || keys[i] === 'remind me to'){ 
+		} else if(keys[i] === 'remind'){ 
 			remind = 'true';
 			event = keyValues[i];
 		} else if(keys[i] === 'remove'){
@@ -123,7 +145,7 @@ function updateJSON(){
 		} else if(keys[i] === 'for'){
 			duration = keyValues[i];
 		} else {
-			console.log('Out of key words');
+			// console.log('Out of key words');
 		}
 	}
 }
@@ -141,6 +163,7 @@ function createEvent(){
 		'event': event,
 		'duration': duration,
 	};
+	// console.log(newEvent);
 	return newEvent;
 }
 
