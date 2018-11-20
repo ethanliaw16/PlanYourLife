@@ -57,7 +57,7 @@ function getEvents() {
         // Authorize a client with credentials, then call the Google Calendar API.
         authorize(JSON.parse(content), getEventId);
         
-        console.log('events from calendar.js ' + eventsToReturn);
+        console.log('events from calendar.js ' + eventsToReturn  );
         //return events;
     });
 }
@@ -132,7 +132,7 @@ function getEventId(auth) {
           deleteId = event.id;
           //console.log(event);
           eventsToReturn[i] = event;
-          //console.log(eventsToReturn[i]);
+          console.log(eventsToReturn[i]);
           //console.log('\n\ni: ' + i);
         });
       } else {
