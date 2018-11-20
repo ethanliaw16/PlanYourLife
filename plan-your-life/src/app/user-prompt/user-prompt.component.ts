@@ -31,10 +31,11 @@ export class UserPromptComponent implements OnInit {
     var query = new Query();
     query.text = text;
     console.log("Query recieved, " + query);
-    this.pylService.sendNewQuery(query).subscribe(response => this.response = response);
+    this.pylService.sendNewQuery(query);
   }
 
   getAllLists(): void{
     this.pylService.retrieveWordLists().subscribe(events => this.events = events);
+    console.log(this.events);
   }
 }

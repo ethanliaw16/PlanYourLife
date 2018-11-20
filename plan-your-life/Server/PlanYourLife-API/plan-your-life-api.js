@@ -6,15 +6,18 @@ router = express.Router();
 
 
 router.post('/newquery', function(req, res){
-  console.log('body at api layer: ' + req.body);
+  console.log('body at api layer: ' + req.body.text);
   queryhandler.processquery(req.body, res);
- //res.send('reached api layer on new query. ' + res.body);
+  console.log('response: ' + res);
+  //res.send('reached api layer on new query. ' + res.body);
   });
 
 router.get('/events', function(req, res){
   console.log('reached api layer for list retrieval.');
-  listHandler.getEvents();
-  res.send(200,'successfully reached api layer');
+  var events = new Array();
+  events = listHandler.getEvents();
+  console.log('list of events: ' + events);
+  res.send(events);
 });
 
 module.exports = router;

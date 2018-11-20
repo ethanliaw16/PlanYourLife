@@ -12,10 +12,10 @@ export class PylService{
 
   constructor(private http: HttpClient) { }
 
-  sendNewQuery(query: Query): Observable<Query>{
-    var response = this.http.post<Query>('http://localhost:8000/api/newquery', query);
+  sendNewQuery(query: Query): void{
+    var response = this.http.post<Query>('http://localhost:8000/api/newquery', query).subscribe();
     console.log('Response: ' + response);
-    return response;
+    //return response.unsubscribe;
   }
 
   retrieveWordLists(): Observable<Event[]>{
