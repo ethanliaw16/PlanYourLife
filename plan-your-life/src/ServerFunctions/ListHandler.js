@@ -1,9 +1,9 @@
 module.exports.getEvents = getEvents;
-var CalendarListIds = require('../../calendar/calendarListIds');
+var Calendar = require('./calendar');
 
 var events;
 
 function getEvents(req, res) {
-    CalendarListIds.execute();
-    res.send({'message': 'Events retrieved.'});
+    events = Calendar.execute();
+    return {'events': events};
 }

@@ -1,7 +1,7 @@
 module.exports.processquery = processQuery;
 
 var Kwi = require('./KeyWordIdentifier');
-var CalendarEventInsert = require('../../calendar/calendarCreateEvent');
+var Calendar = require('./calendar');
 //var CalendarEventRemove = require('../../calendar/calendarDeleteEvent');
 //var CalendarListIds = require('../../calendar/calendarListIds');
 
@@ -25,24 +25,25 @@ function processQuery(query, res){
     //console.log(response.time);
     var formattedDate = formatDateForGoogle(response.time);
     //console.log(formattedDate);
-    if(response.add == 'true') {
-      //console.log('Adding event ');
-      var location = response.where;
-      var startTime = formattedDate;
-      var summary = response.item;
-      var endTime = formattedDate;
-      var eventObject = {'summary': summary,
-      'location': location,
-      'description': 'Event added by PlanYourLife',
-      'start': {'dateTime': startTime, 'timeZone': 'America/New_York'},
-      'end': {'dateTime': endTime, 'timeZone': 'America/New_York'}
-      };
+    var location = response.where;
+    var startTime = formattedDate;
+    var summary = response.item;
+    var endTime = formattedDate;
+    var eventObject = {'summary': summary,
+    'location': location,
+    'description': 'Event added by PlanYourLife',
+    'start': {'dateTime': startTime, 'timeZone': 'America/New_York'},
+    'end': {'dateTime': endTime, 'timeZone': 'America/New_York'}
+    };
 
-      CalendarEventInsert.execute(eventObject);
+    if(response.add == 'true') {
+      console.log('Adding event ' + eventObject);
+      Calendar.createEvent(eventObject);
       res.send({'message':'Event successfully added.'});
     }
     else if (response.remove == 'true') {
-
+      Calendar.deleteEvent(eventObject);
+      res.send({'message':'Event successfully removed.'});
     }
     else if (response.download == 'true') {
       
