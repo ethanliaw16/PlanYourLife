@@ -115,42 +115,49 @@
     </script>
    
 	
-	
+   <!--<ul>
+      <li><img src="src/app/logo.png" width="100"></li>
+      <li><button id="signin-button" onclick="handleSignInClick()">Sign In</button>
+        <button id="signout-button" onclick="handleSignOutClick()" style="visibility: hidden">Sign Out</button></li>
+      
+      <li><app-user-prompt></app-user-prompt>
 
-	
-	
-    <div class="question">
-        <div class="glyphicon glyphicon-question-sign">
+
+        
+    </li>
+    </ul>-->
+
+    <nav class="navbar navbar-fixed-top navbar-light bg-light">
+        <a class="navbar-brand">
+            <img src="src/app/logo.png" height="40" class="d-inline-block align-top" alt="">
+        </a>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav">
+              <li class="nav-item">
+                  <a class="nav-link">
+                    <app-root></app-root>
+                  </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link">
+                  <button type="sign" id="signin-button" onclick="handleSignInClick()">Sign In</button>
+                  <button type="sign" id="signout-button" onclick="handleSignOutClick()" style="visibility: hidden">Sign Out</button>
+                </a>
+              </li>
+              
+              <li class="nav-item"><a class="nav-link"></a><div class="glyphicon glyphicon-question-sign question"></a></li>
+            </ul>
         </div>
-    </div>
-
-    <div class="topRight-container">
-        <img src="src/app/logo.png" width="100">    
-        <div class="topRightButton-container">
-            <button id="signin-button" onclick="handleSignInClick()">Sign In</button>
-            <button id="signout-button" onclick="handleSignOutClick()" style="visibility: hidden">Sign Out</button>
-        </div>    
-    </div>
-
-
-
-
-  <app-user-prompt></app-user-prompt>
-
-
-    <app-root></app-root>
-
-
-
+        
+      </nav>
     
     <div class="lower-container"> 
-        <p>haha</p>
           <div class="lLeft-container"> 
-            <p>boop</p>
+            <p>Calendar Display</p>
           </div>
           
           <div class="lRight-container"> 
-              <p>right</p>
+              <p>Task Display</p>
           </div>
   
       </div>
