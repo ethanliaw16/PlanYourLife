@@ -16,16 +16,7 @@ router.get('/events', function(req, res){
   console.log('reached api layer for list retrieval.');
   var events = new Array();
   events = listHandler.getEvents();
-  console.log('list of events: ' + events[0].toString() + '\n' + 
-  events[1].toString() + '\n' + 
-  events[2].toString() + '\n' +  
-  events[3].toString() + '\n' + 
-  events[4].toString() + '\n' + 
-  events[5].toString() + '\n' + 
-  events[6].toString() + '\n' + 
-  events[7].toString() + '\n' + 
-  events[8].toString() + '\n' + 
-  events[9].toString() + '\n');
+  console.log('list of events: ' + events);
   res.send(events);
 });
 

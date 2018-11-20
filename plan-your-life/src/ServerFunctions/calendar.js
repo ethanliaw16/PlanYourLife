@@ -1,5 +1,6 @@
 module.exports.createEvent = createEvent;
 module.exports.deleteEvent = deleteEvent;
+module.exports.getEvents = getEvents;
 
 const fs = require('fs');
 const readline = require('readline');
@@ -12,7 +13,8 @@ const CREDENTIALS_PATH = '../plan-your-life/src/ServerFunctions/credentials.json
 //variables
 var event;
 var deleteId;
-
+var events;
+var eventsToReturn = new Array();
 //code to parse event information from json file and test /*
 /*fs.readFile('event.json', (err, content) => {
     if (err) return console.log('Error loading event information file:', err);
@@ -49,6 +51,16 @@ function deleteEvent(eventDetails) {
     });
 }
 
+function getEvents() {
+    fs.readFile(CREDENTIALS_PATH, (err, content) => {
+        if (err) return console.log('Error loading client secret file:', err);
+        // Authorize a client with credentials, then call the Google Calendar API.
+        authorize(JSON.parse(content), getEventId);
+        
+        console.log('events from calendar.js ' + eventsToReturn);
+        //return events;
+    });
+}
 /**
  * Wrapper function to delete event
  * @param eventDetails A JSON object holding event Id.
@@ -103,11 +115,12 @@ function removeEvent(auth) {
  * @param {google.auth.OAuth2} auth An authorized OAuth2 client.
  */
 function getEventId(auth) {
+    
     const calendar = google.calendar({version: 'v3', auth});
-    calendar.events.list({
+    events = calendar.events.list({
       calendarId: 'primary',
       timeMin: (new Date()).toISOString(),
-      maxResults: 1,
+      maxResults: 10,
       singleEvents: true,
       orderBy: 'startTime',
     }, (err, res) => {
@@ -117,10 +130,17 @@ function getEventId(auth) {
         //console.log('Upcoming 10 events:');
         events.map((event, i) => {
           deleteId = event.id;
+          //console.log(event);
+          eventsToReturn[i] = event;
+          //console.log(eventsToReturn[i]);
+          //console.log('\n\ni: ' + i);
         });
       } else {
         console.log('No upcoming events found.');
       }
+      console.log('events in getEventId ' + events);
+      eventsToReturn = events;
+      return events;
     });
   }
 
