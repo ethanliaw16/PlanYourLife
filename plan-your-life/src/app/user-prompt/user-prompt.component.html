@@ -1,7 +1,9 @@
 <div class="search-container">
   <form ng-submit="sendQuery(query)" ng-controller="ExampleController">
-      <input [(ngModel)]="query" name="query" placeholder="Enter a query" />
-      <button (click)="sendQuery(query)">submit</button>
+      <input type="text" [(ngModel)]="query" name="query" padding placeholder="Enter a query!" />
+      <button type="submit" (click)="sendQuery(query)">
+          <i class="material-icons md-36">search</i>
+      </button>
   </form>
   <button (click)="getAllLists()">retrieve</button>
 </div>

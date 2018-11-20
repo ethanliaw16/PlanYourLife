@@ -5,7 +5,10 @@
   <base href="/">
 
     <link href="normalize.css" rel="stylesheet">
-	
+  
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet">
+
 	<meta name="google-signin-client_id" content="12352763295-2r9scuuj44f31e76verntmcgn52hdtjl.apps.googleusercontent.com">
 
     <!-- Latest compiled and minified CSS -->
@@ -46,6 +49,7 @@
 		}
 	  </script>
   <script src="https://apis.google.com/js/platform.js?onload=renderButton" async defer></script>-->
+
 	 <script type="text/javascript">
       function handleClientLoad() {
         // Loads the client library and the auth2 library together for efficiency.
@@ -109,11 +113,10 @@
       onload="this.onload=function(){};handleClientLoad()"
       onreadystatechange="if (this.readyState === 'complete') this.onload()">
     </script>
-    <button id="signin-button" onclick="handleSignInClick()">Sign In</button>
-    <button id="signout-button" onclick="handleSignOutClick()" style="visibility: hidden">Sign Out</button>
+   
 	
 	
-	<auth></auth>
+
 	
 	
     <div class="question">
@@ -121,19 +124,36 @@
         </div>
     </div>
 
-
-    <div class="title-container">
-      <img src="src/app/logo.png" width="400">
+    <div class="topRight-container">
+        <img src="src/app/logo.png" width="100">    
+        <div class="topRightButton-container">
+            <button id="signin-button" onclick="handleSignInClick()">Sign In</button>
+            <button id="signout-button" onclick="handleSignOutClick()" style="visibility: hidden">Sign Out</button>
+        </div>    
     </div>
-    <app-user-prompt></app-user-prompt>
 
-     <div class="navbar navbar-inverse navbar-fixed-bottom" role="navigation">
-        <span class="glyphicon glyphicon-calendar" aria-hidden="true">
-        </span>
-        <span class="glyphicon glyphicon-check" aria-hidden="true">
-        </span>
-    </div>
+
+
+
+  <app-user-prompt></app-user-prompt>
+
+
     <app-root></app-root>
 
+
+
+    
+    <div class="lower-container"> 
+        <p>haha</p>
+          <div class="lLeft-container"> 
+            <p>boop</p>
+          </div>
+          
+          <div class="lRight-container"> 
+              <p>right</p>
+          </div>
+  
+      </div>
+  
 </body>
 </html>

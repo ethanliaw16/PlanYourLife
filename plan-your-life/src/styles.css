@@ -54,15 +54,26 @@ input{
     font-size: 20px;
 }
 
-.search-container {
-    padding-top: 5%;
-    padding-left: 26%;
-    font-size: 25px;
+.topRight-container{
+    padding-top: 2%;
+    padding-left: 2%;
+    align-items: center;
+    position: absolute;
+    justify-content: center;
 }
 
-.title-container {
-    padding-top: 3%;
-    padding-left: 36%;
+.topRightButton-container{
+    padding-top: 6%;
+    padding-left: 2%;
+    align-items: center;
+    position: absolute;
+    justify-content: center;
+}
+
+.search-container {
+    padding-top: 2%;
+    padding-left: 26%;
+    font-size: 25px;
 }
 
 .search .search-container button:hover {
@@ -76,7 +87,48 @@ input{
     padding: 25px;
 }
 
-.navbar{
-    background-color: #263238;
-    border-color: #263238;
+input[type=text] {
+    padding: 12px 20px;
+    box-sizing: border-box;
 }
+
+.material-icons.md-36 { font-size: 36px; }
+
+button[type=submit]{
+    background-color: orange;
+    padding: 12px 20px;
+    border: none;
+    position: absolute;
+}
+
+.lower-container{
+    background-color: yellow;
+    padding-bottom: 2%;
+    margin-top: 3%;
+    height: 30%;
+    margin-bottom: auto;
+    width: 100%;
+    min-height: 300px;
+}
+
+.lLeft-container{
+    background-color: purple;
+    padding-bottom: 2%;
+    margin-left: 2%;
+    margin-bottom: auto;
+    width: 45%;
+    position: absolute;
+    float: left;
+}
+
+.lRight-container{
+    background-color: green;
+    margin-bottom: auto;
+    padding-bottom: 2%;
+    margin-left: 52%;
+    margin-bottom: auto;
+    width: 45%;
+    position: absolute;
+}
+
+
