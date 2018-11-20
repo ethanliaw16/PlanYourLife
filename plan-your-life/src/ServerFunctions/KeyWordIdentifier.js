@@ -4,6 +4,7 @@ By: Christian Bonnell
 
 // Prompt object
 // var prompt = require('prompt');
+var date = require('date');
 
 var keywords = [];
 
@@ -63,7 +64,7 @@ function resetFields(){
 }
 
 /*
-Function that identifies keywords of command and sends a JSON file to backend for API calls requests.
+Function that identifiese keywords of command and sends a JSON file to backend for API calls requests.
 Done through helper method
 s*/
 function KWI(command){
@@ -153,7 +154,9 @@ function updateJSON(){
 			item = keyValues[i];
 		} else if(keys[i] === 'to'){
 			destination = keyValues[i];
-		} else if(keys[i] === 'at' || keys[i] === 'on'){
+		} else if(keys[i] === 'on'){
+			time = convertDay(keyValues[i]);
+		} else if(keys[i] === 'at'){
 			time = keyValues[i];
 		} else if(keys[i] === 'from'){
 			where = keyValues[i];
@@ -163,6 +166,34 @@ function updateJSON(){
 			// console.log('Out of key words');
 		}
 	}
+}
+
+function convertDay(dateTime){
+	var date = new Date();
+	if(dateTime === 'monday'){
+		return getNextDayOfWeek(date, 1);
+	} else if (dateTime === 'tuesday'){
+		return getNextDayOfWeek(date, 2);
+	} else if (dateTime === 'wednesday'){
+		return getNextDayOfWeek(date, 3);
+	} else if (dateTime === 'thursday'){
+		return getNextDayOfWeek(date, 4);
+	} else if (dateTime === 'friday'){
+		return getNextDayOfWeek(date, 5);
+	} else if (dateTime === 'saturday'){
+		return getNextDayOfWeek(date, 6);
+	} else if (dateTime === 'sunday'){
+		return getNextDayOfWeek(date, 7);
+	}
+}
+
+function getNextDayOfWeek(date, dayOfWeek) {
+
+    var resultDate = new Date(date.getTime());
+
+    resultDate.setDate(date.getDate() + (7 + dayOfWeek - date.getDay()) % 7);
+
+    return resultDate;
 }
 
 function createEvent(){
@@ -202,3 +233,4 @@ function KWI(command){
 }
 
 module.exports.KWI = KWI;
+module.exports.getNextDayOfWeek = getNextDayOfWeek;

@@ -5,6 +5,7 @@ Testing class for KeyWordIdentifier
 
 var chai = require('chai');
 var KeyWordIdentifier = require('./KeyWordIdentifier');
+var date = require ('date');
 
 var assert = chai.assert;
 
@@ -132,5 +133,17 @@ describe("KeyWordIdentifierTest", function() {
 		var kwiEvent7 = KeyWordIdentifier.KWI("remind me to pick up tom");
 		assert.equal(JSON.stringify(intendedEvent7), JSON.stringify(kwiEvent7));
 		done();		
+	});
+	it("Testing for getting the next monday (represented by the number 1) of the week", function(done) {
+		var date = new Date(2018, 10, 20); //10 is for November
+		resultDate = KeyWordIdentifier.getNextDayOfWeek(date, 1);
+		assert.equal('Mon Nov 26 2018 00:00:00 GMT-0500 (Eastern Standard Time)', resultDate.toString());
+		done();
+	});
+	it("Testing for getting the next sunday (represented by the number 7) of the week when today is sunday", function(done) {
+		var date = new Date(2018, 10, 18); //10 is for November
+		resultDate = KeyWordIdentifier.getNextDayOfWeek(date, 7);
+		assert.equal('Sun Nov 18 2018 00:00:00 GMT-0500 (Eastern Standard Time)', resultDate.toString());
+		done();
 	});
 });
