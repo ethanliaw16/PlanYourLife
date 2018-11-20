@@ -34,8 +34,6 @@ function execute(eventObject) {
     event = JSON.parse(content)
   });*/
   event = eventObject;
-  console.log('inside the execute of calendar create event');
-  console.log(event);
   
   // Load client secrets from a local file.
   fs.readFile(credentials, (err, content) => {

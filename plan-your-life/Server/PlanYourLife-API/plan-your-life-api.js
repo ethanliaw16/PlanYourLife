@@ -1,17 +1,19 @@
 var express = require('express');
 
-var queryhandler = require('../../src/ServerFunctions/QueryHandler')
+var queryhandler = require('../../src/ServerFunctions/QueryHandler');
+var listHandler = require('../../src/ServerFunctions/ListHandler');
 router = express.Router();
 
 
 router.post('/newquery', function(req, res){
-  //console.log('body at api layer: ' + req.body);
+  console.log('body at api layer: ' + req.body);
   queryhandler.processquery(req.body, res);
-  res.send('reached api layer on new query.');
+ //res.send('reached api layer on new query. ' + res.body);
   });
 
-router.get('/lists', function(req, res){
+router.get('/events', function(req, res){
   console.log('reached api layer for list retrieval.');
+  listHandler.getEvents();
   res.send(200,'successfully reached api layer');
 });
 

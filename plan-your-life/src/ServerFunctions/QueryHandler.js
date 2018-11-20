@@ -8,9 +8,9 @@ var CalendarEventInsert = require('../../calendar/calendarCreateEvent');
 //var Task = require('../../tasks/createTaskList');
 
 function processQuery(query, res){
-    console.log('Reached the query handler. ' + query.text);
+    //console.log('Reached the query handler. ' + query.text);
     var response = Kwi.KWI(query.text);
-    var frontendResponse = String.format('Result of Key word identifier on query: \n add {0}\ndownload {1}\nremind {2}\nremove {3}\ndestination {4}\nitem {5}\ntime {6}\nwhere {7}\nevent {8}\nduration {9} ',
+    /*var frontendResponse = String.format('Result of Key word identifier on query: \n add {0}\ndownload {1}\nremind {2}\nremove {3}\ndestination {4}\nitem {5}\ntime {6}\nwhere {7}\nevent {8}\nduration {9} ',
     response.add,
     response.download,
     response.remind,
@@ -21,12 +21,12 @@ function processQuery(query, res){
     response.where,
     response.event,
     response.duration);
-    console.log(frontendResponse);
-    console.log(response.time);
+    console.log(frontendResponse);*/
+    //console.log(response.time);
     var formattedDate = formatDateForGoogle(response.time);
-    console.log(formattedDate);
+    //console.log(formattedDate);
     if(response.add == 'true') {
-      console.log('Adding event ');
+      //console.log('Adding event ');
       var location = response.where;
       var startTime = formattedDate;
       var summary = response.item;
@@ -39,7 +39,7 @@ function processQuery(query, res){
       };
 
       CalendarEventInsert.execute(eventObject);
-      console.log('event insert executed.');
+      res.send({'message':'Event successfully added.'});
     }
     else if (response.remove == 'true') {
 
@@ -56,7 +56,6 @@ function processQuery(query, res){
     /*var googleresponse = CalendarEventInsert.execute();
     var googleTaskResponse = Task.execute();
     res.send(frontendResponse);*/
-    console.log('end of query handler');
   }
 
   String.format = function(format) {
@@ -71,22 +70,8 @@ function processQuery(query, res){
 
   function formatDateForGoogle(date){
     var fullDateForGoogle = new Date(date);
-    /*console.log(fullDateForGoogle);
-    var year = fullDateForGoogle.getFullYear;
-    var month = addLeadingZero(fullDateForGoogle.getMonth); 
-    var day = addLeadingZero(fullDateForGoogle.getDate);
-    var hour = addLeadingZero(fullDateForGoogle.getHours); 
-    var minutes = addLeadingZero(fullDateForGoogle.getMinutes); 
-    var seconds = addLeadingZero(fullDateForGoogle.getSeconds);*/
-    return fullDateForGoogle;//String.format('{0}-{1}-{2}T{3}:{4}:{5}-07:00', year, month, day, hour, minutes, seconds);
-    
+    return fullDateForGoogle;
     //2015-05-28T17:00:00-07:00
   }
 
-  function addLeadingZero(num) {
-    var returnNum = num;
-    if (num < 10) {
-      returnNum = String.format('0{0}', num);
-    }
-    return returnNum;
-  }
+ 
