@@ -77,7 +77,7 @@ function insertTask(auth) {
   const service = google.tasks({version: 'v1', auth});
   service.tasks.insert({
     auth: auth,
-    tasklist: '@Groceries',
+    tasklist: 'Groceries',
     resource: task,
   }, (err, res) => {
     if (err) return console.error('The API returned an error: ' + err);
