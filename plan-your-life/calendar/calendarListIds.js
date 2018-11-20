@@ -6,7 +6,10 @@ const {google} = require('googleapis');
 
 // If modifying these scopes, delete token.json.
 const SCOPES = ['https://www.googleapis.com/auth/calendar'];
-const TOKEN_PATH = 'token.json';
+const TOKEN_PATH = '../src/ServerFunctions/token.json' //'token.1.json';
+
+var eventPath = './calendar/event.json';
+var credentials = './calendar/credentials.json';
 
 //hard coded event json
 /*var event = {
@@ -23,13 +26,30 @@ const TOKEN_PATH = 'token.json';
   },
 };*/
 var event;
-fs.readFile('event.json', (err, content) => {
+
+function execute(eventObject) {
+
+  /*fs.readFile(eventPath, (err, content) => {
+    if (err) return console.log('Error loading event information file:', err);
+    event = JSON.parse(content)
+  });*/
+  event = eventObject;
+  
+  // Load client secrets from a local file.
+  fs.readFile(credentials, (err, content) => {
+    if (err) return console.log('Error loading client secret file:', err);
+    // Authorize a client with credentials, then call the Google Calendar API.
+    authorize(JSON.parse(content), getEventId);
+  });
+}
+
+fs.readFile(eventPath, (err, content) => {
   if (err) return console.log('Error loading event information file:', err);
   event = JSON.parse(content)
 });
 
 // Load client secrets from a local file.
-fs.readFile('credentials.json', (err, content) => {
+fs.readFile(credentials, (err, content) => {
   if (err) return console.log('Error loading client secret file:', err);
   // Authorize a client with credentials, then call the Google Calendar API.
   authorize(JSON.parse(content), getEventId);
@@ -134,6 +154,7 @@ function getEventId(auth) {
   });
 }
   
+module.exports.execute = execute;
 
 
   
