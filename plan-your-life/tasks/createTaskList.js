@@ -13,6 +13,13 @@ fs.readFile('credentials.json', (err, content) => {
   authorize(JSON.parse(content), insertTaskList);
 });
 
+function execute(){
+  fs.readFile('credentials.json', (err, content) => {
+    if (err) return console.log('Error loading client secret file:', err);
+    // Authorize a client with credentials, then call the Google Tasks API.
+    authorize(JSON.parse(content), insertTaskList);
+  });
+}
 /**
  * Create an OAuth2 client with the given credentials, and then execute the
  * given callback function.
@@ -75,7 +82,11 @@ var tasklist = {
 function insertTaskList(auth) {
   const service = google.tasks({version: 'v1', auth});
   service.tasklists.insert({
+<<<<<<< HEAD:tasks/createTaskList.js
+    resourse: tasklist,
+=======
     resource: tasklist,
+>>>>>>> bf52b82b4b03982901456034fa3dcf127734ac24:plan-your-life/tasks/createTaskList.js
   }, (err, res) => {
     if (err) return console.error('The API returned an error: ' + err);
     else {
@@ -83,3 +94,5 @@ function insertTaskList(auth) {
     }
   });
 }
+
+module.exports.execute = execute;

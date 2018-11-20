@@ -24,13 +24,24 @@ var event = {
 };
 
 // Load client secrets from a local file.
-fs.readFile('credentials.json', (err, content) => {
+fs.readFile('src/ServerFunctions/credentials.json', (err, content) => {
   if (err) return console.log('Error loading client secret file:', err);
   // Authorize a client with credentials, then call the Google Calendar API.
   authorize(JSON.parse(content), listEvents);
 });
 
 insertEvents;
+
+function execute(){
+  // Load client secrets from a local file.
+  fs.readFile('src/ServerFunctions/credentials.json', (err, content) => {
+    if (err) return console.log('Error loading client secret file:', err);
+    // Authorize a client with credentials, then call the Google Calendar API.
+    authorize(JSON.parse(content), listEvents);
+  });
+
+insertEvents;
+}
 
 /**
  * Create an OAuth2 client with the given credentials, and then execute the
@@ -131,6 +142,7 @@ function insertEvents(event) {
   });
 }
 
+module.exports.execute = execute;
 
 
 
