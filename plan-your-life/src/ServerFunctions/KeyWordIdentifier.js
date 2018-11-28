@@ -80,7 +80,7 @@ function KWI(command){
 		download === 'false' && 
 		remind === 'false' && 
 		remove === 'false'){
-		throw("Input does not contain the add, download, remind or false key words.");
+		throw new Error("Input does not contain the add, download, remind or false key words.");
 	} else if(
 		destination === '' && 
 		item === '' && 
@@ -88,7 +88,7 @@ function KWI(command){
 		where === '' && 
 		event === '' && 
 		duration === ''){
-		throw("No content provided(i.e. Destination, time, location, etc.)");
+		throw new Error("No content provided(i.e. Destination, time, location, etc.");
 	}
 	// console.log(userEvent);
 	return userEvent;
@@ -109,6 +109,7 @@ function getKeyWords(){
 	keywords.push('from');
 	keywords.push('for');
 	keywords.push('on');
+	keywords.push('me');
 }
 
 /*
@@ -139,21 +140,53 @@ function extractCache(command){
 // Goes through the extracted cache and assigns the JSON values the correct values
 function updateJSON(){
 
+	// console.log(keys);
+	switch(keys[1]){
+		case 'add':
+			addRequest();
+			break;
+		case 'remind':
+			remindRequest();
+			break;
+		default:
+			break;
+	}
+
+}
+
+/*
+Function that parses an 'add' request to populate the corresponding JSON
+*/
+function addRequest(){
+
 	for(i = 1; i < keys.length; i++){
 		if(keys[i] === 'add'){
 			add = 'true';
 			item = keyValues[i];
-		} else if(keys[i] === 'download'){ // Only implemented for downloading lists
-			download = 'true';
-			destination = keyValues[i];
-		} else if(keys[i] === 'remind'){ 
-			remind = 'true';
-			event = keyValues[i];
-		} else if(keys[i] === 'remove'){
-			remove = 'true';
-			item = keyValues[i];
 		} else if(keys[i] === 'to'){
 			destination = keyValues[i];
+		} else {
+			// console.log('Out of key words');
+		}
+	}
+}
+
+/*
+Function that parses a 'remind' request to populate the corresponding JSON
+*/
+function remindRequest(){
+
+	foundTo = false; //boolean to determine if the first 'to' indicating the request is a remind request has been found
+
+	for(i = 1; i < keys.length; i++){
+		// if(keys[i] === 'remind'){ 
+		// 	remind = 'true';
+		// 	event = keyValues[i];
+		// } else 
+		if(keys[i] === 'to' && !foundTo){ //only treats 'to' as a keyword once when parsing the string
+			remind = 'true';
+			foundTo = true;
+			event = keyValues[i];
 		} else if(keys[i] === 'on'){
 			time = convertDay(keyValues[i]);
 		} else if(keys[i] === 'at'){
