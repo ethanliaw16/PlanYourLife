@@ -21,7 +21,7 @@ export class UserPromptComponent implements OnInit {
   query: Query;
 
   response: Query;
-
+  
   logSubmit(){
     console.log("Query Entered successfully.");
   }

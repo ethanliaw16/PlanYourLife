@@ -9,13 +9,24 @@ var Calendar = require('./calendar');
 
 function processQuery(query, res){
     var response = Kwi.KWI(query.text);
+    console.log(response.where);
+    console.log(response.item);
+    console.log(response.item);
+    console.log(response.time);
     //var firstTenEvents = Calendar;
-    var formattedDate = formatDateForGoogle(response.time);
+    if(response.time instanceof Date) {
+      var startTime = response.time;
+      var endTime = response.time;
+    }
+    else {
+      var formattedDate = formatDateForGoogle(response.time);
+      var startTime = formattedDate;
+      var endTime = formattedDate;
+    }
+    //var formattedDate = formatDateForGoogle(response.time);
     //console.log(formattedDate);
     var location = response.where;
-    var startTime = formattedDate;
-    var summary = response.item;
-    var endTime = formattedDate;
+    var summary = response.event;
     var eventObject = {'summary': summary,
     'location': location,
     'description': 'Event added by PlanYourLife',
@@ -37,7 +48,9 @@ function processQuery(query, res){
       
     }
     else if (response.remind == 'true') {
-      
+      console.log('Adding event ' + eventObject);
+      Calendar.createEvent(eventObject);
+      res.send({'message':'Event successfully added.'});
     }
     //JSON.parse(response);
     //console.log(frontendResponse);
