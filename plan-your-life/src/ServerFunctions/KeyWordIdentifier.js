@@ -199,7 +199,6 @@ function newListRequest(){
 	}
 }
 
-=======
 // Converts the name of a day of the week(monday,..., sunday) to the numerical equivalent(1,..., 7)
 function convertDay(dateTime){
 	var date = new Date();
