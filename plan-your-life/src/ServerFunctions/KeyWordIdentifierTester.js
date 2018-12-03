@@ -5,31 +5,32 @@ Testing class for KeyWordIdentifier
 
 var chai = require('chai');
 var KeyWordIdentifier = require('./KeyWordIdentifier');
+var date = require ('date');
 
 var assert = chai.assert;
 
 describe("KeyWordIdentifierTest", function() {
 
-	beforeEach(function(done) {
+	// beforeEach(function(done) {
 
-		var intendedEvent = {
-			'add': 'false',
-			'download': 'false',
-			'remind': 'false',
-			'remove': 'false',
-			'destination': '',
-			'item': '',
-			'time': '',
-			'where': '',
-			'event': '',
-			'duration': '',
-		};
+	// 	var intendedEvent = {
+	// 		'add': 'false',
+	// 		'download': 'false',
+	// 		'remind': 'false',
+	// 		'remove': 'false',
+	// 		'destination': '',
+	// 		'item': '',
+	// 		'time': '',
+	// 		'where': '',
+	// 		'event': '',
+	// 		'duration': '',
+	// 	};
 
-		var kwiEvent = KeyWordIdentifier.KWI('');
+	// 	var kwiEvent = KeyWordIdentifier.KWI('');
 
-		done();
+	// 	done();
 
-	});
+	// });
 	it("create JSON for basic add to list \"add eggs to groceries\"", function(done) {
 		var intendedEvent1 = {
 			'add': 'true',
@@ -98,8 +99,26 @@ describe("KeyWordIdentifierTest", function() {
 		assert.equal(JSON.stringify(intendedEvent4), JSON.stringify(kwiEvent4));
 		done();		
 	});
+	it("check for error when remind keyword is not used \"pick up tom\"", function(done) {
+		try {
+		KeyWordIdentifier.KWI("pick up tom");
+		}
+		catch(err){
+			assert.equal('Input does not contain the add, download, remind or false key words.', err);
+			done();	
+		}	
+	});
+	it("check for error when no content is provided \"remind me\"", function(done) {
+		try {
+		KeyWordIdentifier.KWI("remind me");
+		}
+		catch(err){
+			assert.equal('No content provided(i.e. Destination, time, location, etc.)', err);
+			done();	
+		}		
+	});
 	it("create JSON for complex reminder \"remind me to pick up tom\"", function(done) {
-		var intendedEvent4 = {
+		var intendedEvent7 = {
 			'add': 'false',
 			'download': 'false',
 			'remind': 'true',
@@ -111,8 +130,20 @@ describe("KeyWordIdentifierTest", function() {
 			'event': 'pick up tom',
 			'duration': '',
 		};
-		var kwiEvent4 = KeyWordIdentifier.KWI("remind me to pick up tom");
-		assert.equal(JSON.stringify(intendedEvent4), JSON.stringify(kwiEvent4));
+		var kwiEvent7 = KeyWordIdentifier.KWI("remind me to pick up tom");
+		assert.equal(JSON.stringify(intendedEvent7), JSON.stringify(kwiEvent7));
 		done();		
+	});
+	it("Testing for getting the next monday (represented by the number 1) of the week", function(done) {
+		var date = new Date(2018, 10, 20); //10 is for November
+		resultDate = KeyWordIdentifier.getNextDayOfWeek(date, 1);
+		assert.equal('Mon Nov 26 2018 00:00:00 GMT-0500 (Eastern Standard Time)', resultDate.toString());
+		done();
+	});
+	it("Testing for getting the next sunday (represented by the number 7) of the week when today is sunday", function(done) {
+		var date = new Date(2018, 10, 18); //10 is for November
+		resultDate = KeyWordIdentifier.getNextDayOfWeek(date, 7);
+		assert.equal('Sun Nov 18 2018 00:00:00 GMT-0500 (Eastern Standard Time)', resultDate.toString());
+		done();
 	});
 });

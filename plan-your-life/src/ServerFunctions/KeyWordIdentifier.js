@@ -4,6 +4,7 @@ By: Christian Bonnell
 
 // Prompt object
 // var prompt = require('prompt');
+var date = require('date');
 
 var keywords = [];
 
@@ -63,7 +64,7 @@ function resetFields(){
 }
 
 /*
-Function that identifies keywords of command and sends a JSON file to backend for API calls requests.
+Function that identifiese keywords of command and sends a JSON file to backend for API calls requests.
 Done through helper method
 s*/
 function KWI(command){
@@ -74,6 +75,23 @@ function KWI(command){
 	extractCache(command);
 	updateJSON();
 	userEvent = createEvent();
+	// Throws an error when none of the primary keywords are given by the user.
+	// Without them we cannot know which Google Planning Tool should be updated
+	if(
+		add === 'false' && 
+		download === 'false' && 
+		remind === 'false' && 
+		remove === 'false'){
+		throw("Input does not contain the add, download, remind or false key words.");
+	} else if(
+		destination === '' && 
+		item === '' && 
+		time === '' && 
+		where === '' && 
+		event === '' && 
+		duration === ''){
+		throw("No content provided(i.e. Destination, time, location, etc.)");
+	}
 	// console.log(userEvent);
 	return userEvent;
 }
@@ -103,6 +121,7 @@ function extractCache(command){
 	var keyword = '';
 	var values = '';
 
+	// Creates an array containing all the words within a String for easy manipulation
 	command.forEach(function(element){
 		if (keywords.includes(element)) {
 			keys.push(keyword.trim());
@@ -121,6 +140,7 @@ function extractCache(command){
 }
 
 // Goes through the extracted cache and assigns the JSON values the correct values
+// Check Design Document to understand what each key word should represent
 function updateJSON(){
 
 	for(i = 1; i < keys.length; i++){
@@ -138,7 +158,9 @@ function updateJSON(){
 			item = keyValues[i];
 		} else if(keys[i] === 'to'){
 			destination = keyValues[i];
-		} else if(keys[i] === 'at' || keys[i] === 'on'){
+		} else if(keys[i] === 'on'){
+			time = convertDay(keyValues[i]);
+		} else if(keys[i] === 'at'){
 			time = keyValues[i];
 		} else if(keys[i] === 'from'){
 			where = keyValues[i];
@@ -150,6 +172,39 @@ function updateJSON(){
 	}
 }
 
+// Converts the name of a day of the week(monday,..., sunday) to the numerical equivalent(1,..., 7)
+function convertDay(dateTime){
+	var date = new Date();
+	if(dateTime === 'monday'){
+		return getNextDayOfWeek(date, 1);
+	} else if (dateTime === 'tuesday'){
+		return getNextDayOfWeek(date, 2);
+	} else if (dateTime === 'wednesday'){
+		return getNextDayOfWeek(date, 3);
+	} else if (dateTime === 'thursday'){
+		return getNextDayOfWeek(date, 4);
+	} else if (dateTime === 'friday'){
+		return getNextDayOfWeek(date, 5);
+	} else if (dateTime === 'saturday'){
+		return getNextDayOfWeek(date, 6);
+	} else if (dateTime === 'sunday'){
+		return getNextDayOfWeek(date, 7);
+	}
+}
+
+// Given a specific day and a day of the week (Monday = 1,..., Sunday = 7)
+// It will return the date of the next occuring Monday,..., Sunday
+function getNextDayOfWeek(date, dayOfWeek) {
+
+    var resultDate = new Date(date.getTime());
+
+    resultDate.setDate(date.getDate() + (7 + dayOfWeek - date.getDay()) % 7);
+
+    return resultDate;
+}
+
+
+//Creates the JSON object using the fields that were updated by the KWI
 function createEvent(){
 	var newEvent = {
 		'add': add,
@@ -168,3 +223,4 @@ function createEvent(){
 }
 
 module.exports.KWI = KWI;
+module.exports.getNextDayOfWeek = getNextDayOfWeek;
