@@ -1,3 +1,5 @@
+module.exports.newTask = newTask;
+
 const fs = require('fs');
 const readline = require('readline');
 const { google } = require('googleapis');
@@ -13,9 +15,8 @@ var taskData = {
     'notes': 'Me want cookie',
 }
 
-var tasklist = {
-    'title': 'New Task List',
-}
+var tasklist = {'title': 'A Task List'};
+
 
 newTask(taskData);
 
@@ -36,7 +37,9 @@ function newTaskList (taskDetails) {
  * Wrapper function to insert task
  * @param taskDetails A JSON object holding taskdetails
  */
-function newTask (taskDetails) {
+function newTask (taskDetails, taskList) {
+    tasklist = taskList;
+    console.log(tasklist);
     fs.readFile('credentials.json', (err, content) => {
         task = taskDetails;
         if (err) return console.log('Error loading client secret file:', err);
@@ -133,6 +136,7 @@ function authorize(credentials, callback) {
     });
 }
 
+
 /**
  * Get and store new token after prompting for user authorization, and then
  * execute the given callback with the authorized OAuth2 client.
@@ -163,4 +167,5 @@ function getAccessToken(oAuth2Client, callback) {
         });
     });
 }
+
 
