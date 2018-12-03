@@ -19,6 +19,7 @@ export class PylService{
   }
 
   retrieveWordLists(): Observable<Event[]>{
+    console.log('get events invoked.');
     return this.http.get<Event[]>('http://localhost:8000/api/events');
   }
 }

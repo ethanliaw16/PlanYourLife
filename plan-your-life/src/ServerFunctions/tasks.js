@@ -15,7 +15,7 @@ var taskData = {
     'notes': 'Me want cookie',
 }
 
-var tasklist;
+var tasklist = {'title': 'A Task List'};
 
 
 newTask(taskData);
@@ -69,7 +69,7 @@ function insertTask(auth) {
     const service = google.tasks({ version: 'v1', auth });
     service.tasks.insert({
         auth: auth,
-        tasklist: tasklist,
+        tasklist: '@default',
         resource: task,
     }, (err, res) => {
         if (err) return console.error('The API returned an error: ' + err);

@@ -5,11 +5,13 @@ import {HttpClientModule} from '@angular/common/http';
 
 import { AppComponent } from './app.component';
 import { UserPromptComponent } from './user-prompt/user-prompt.component';
+import { EventListComponent } from './event-list/event-list.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    UserPromptComponent
+    UserPromptComponent,
+    EventListComponent
   ],
   imports: [
     BrowserModule,

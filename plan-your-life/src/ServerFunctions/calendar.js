@@ -51,13 +51,13 @@ function deleteEvent(eventDetails) {
     });
 }
 
-function getEvents() {
+async function getEvents() {
     fs.readFile(CREDENTIALS_PATH, (err, content) => {
         if (err) return console.log('Error loading client secret file:', err);
         // Authorize a client with credentials, then call the Google Calendar API.
         authorize(JSON.parse(content), getEventId);
         
-        console.log('events from calendar.js ' + eventsToReturn  );
+        console.log('events in getEventId after leaving calendar.events.list: ' + events)
         //return events;
     });
 }
@@ -114,10 +114,10 @@ function removeEvent(auth) {
  * Stores the next upcoming eventId to deleteId.
  * @param {google.auth.OAuth2} auth An authorized OAuth2 client.
  */
-function getEventId(auth) {
+async function getEventId(auth) {
     
     const calendar = google.calendar({version: 'v3', auth});
-    events = calendar.events.list({
+    events = await calendar.events.list({
       calendarId: 'primary',
       timeMin: (new Date()).toISOString(),
       maxResults: 10,
@@ -132,16 +132,20 @@ function getEventId(auth) {
           deleteId = event.id;
           //console.log(event);
           eventsToReturn[i] = event;
-          console.log(eventsToReturn[i]);
+          //console.log(eventsToReturn[i]);
           //console.log('\n\ni: ' + i);
         });
-      } else {
+      } 
+      else {
         console.log('No upcoming events found.');
       }
-      console.log('events in getEventId ' + events);
-      eventsToReturn = events;
-      return events;
-    });
+      var j;
+      for (j = 0; j < 10; j++) {
+        //console.log(eventsToReturn[j].summary);
+        console.log(eventsToReturn[j]);
+      }
+    }); 
+    
   }
 
 //Google functions
@@ -152,7 +156,7 @@ function getEventId(auth) {
  * @param {Object} credentials The authorization client credentials.
  * @param {function} callback The callback to call with the authorized client.
  */
-function authorize(credentials, callback) {
+async function authorize(credentials, callback) {
     //console.log('credentials' + credentials);
     const { client_secret, client_id, redirect_uris } = credentials.installed;
     const oAuth2Client = new google.auth.OAuth2(
