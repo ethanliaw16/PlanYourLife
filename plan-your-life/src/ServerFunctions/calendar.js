@@ -1,21 +1,26 @@
+module.exports.createEvent = createEvent;
+module.exports.deleteEvent = deleteEvent;
+module.exports.getEvents = getEvents;
+
 const fs = require('fs');
 const readline = require('readline');
 const { google } = require('googleapis');
 
 // If modifying these scopes, delete token.json.
 const SCOPES = ['https://www.googleapis.com/auth/calendar'];
-const TOKEN_PATH = 'token.json';
-
+const TOKEN_PATH = '../plan-your-life/src/ServerFunctions/token.json';//'token.json';
+const CREDENTIALS_PATH = '../plan-your-life/src/ServerFunctions/credentials.json';
 //variables
 var event;
 var deleteId;
-
+var events;
+var eventsToReturn = new Array();
 //code to parse event information from json file and test /*
-fs.readFile('event.json', (err, content) => {
+/*fs.readFile('event.json', (err, content) => {
     if (err) return console.log('Error loading event information file:', err);
     event = JSON.parse(content)
-});
-createEvent(event);
+});*/
+//createEvent(event);
 
 //*/
 
@@ -25,7 +30,8 @@ createEvent(event);
  */
 function createEvent(eventDetails) {
     event = eventDetails;
-    fs.readFile('credentials.json', (err, content) => {
+    console.log('event to add: ' + event.summary);
+    fs.readFile(CREDENTIALS_PATH, (err, content) => {
         if (err) return console.log('Error loading client secret file:', err);
         // Authorize a client with credentials, then call the Google Calendar API.
         authorize(JSON.parse(content), addEvent);
@@ -38,19 +44,29 @@ function createEvent(eventDetails) {
  */
 function deleteEvent(eventDetails) {
     deleteId = eventDetails;
-    fs.readFile('credentials.json', (err, content) => {
+    fs.readFile(CREDENTIALS_PATH, (err, content) => {
         if (err) return console.log('Error loading client secret file:', err);
         // Authorize a client with credentials, then call the Google Calendar API.
         authorize(JSON.parse(content), removeEvent);
     });
 }
 
+function getEvents() {
+    fs.readFile(CREDENTIALS_PATH, (err, content) => {
+        if (err) return console.log('Error loading client secret file:', err);
+        // Authorize a client with credentials, then call the Google Calendar API.
+        authorize(JSON.parse(content), getEventId);
+        
+        console.log('events from calendar.js ' + eventsToReturn  );
+        //return events;
+    });
+}
 /**
  * Wrapper function to delete event
  * @param eventDetails A JSON object holding event Id.
  */
 function getEvent(eventDetails) {
-    fs.readFile('credentials.json', (err, content) => {
+    fs.readFile(CREDENTIALS_PATH, (err, content) => {
         if (err) return console.log('Error loading client secret file:', err);
         // Authorize a client with credentials, then call the Google Calendar API.
         authorize(JSON.parse(content), getEventId);
@@ -73,7 +89,7 @@ function addEvent(auth) {
             console.log('There was an error contacting the Calendar service: ' + err);
             return;
         }
-        console.log('Event created: ' + event.id);
+        console.log('Event created: ' + event.summary);
     });
 }
 
@@ -99,11 +115,12 @@ function removeEvent(auth) {
  * @param {google.auth.OAuth2} auth An authorized OAuth2 client.
  */
 function getEventId(auth) {
+    
     const calendar = google.calendar({version: 'v3', auth});
-    calendar.events.list({
+    events = calendar.events.list({
       calendarId: 'primary',
       timeMin: (new Date()).toISOString(),
-      maxResults: 1,
+      maxResults: 10,
       singleEvents: true,
       orderBy: 'startTime',
     }, (err, res) => {
@@ -113,10 +130,17 @@ function getEventId(auth) {
         //console.log('Upcoming 10 events:');
         events.map((event, i) => {
           deleteId = event.id;
+          //console.log(event);
+          eventsToReturn[i] = event;
+          console.log(eventsToReturn[i]);
+          //console.log('\n\ni: ' + i);
         });
       } else {
         console.log('No upcoming events found.');
       }
+      console.log('events in getEventId ' + events);
+      eventsToReturn = events;
+      return events;
     });
   }
 
@@ -129,6 +153,7 @@ function getEventId(auth) {
  * @param {function} callback The callback to call with the authorized client.
  */
 function authorize(credentials, callback) {
+    //console.log('credentials' + credentials);
     const { client_secret, client_id, redirect_uris } = credentials.installed;
     const oAuth2Client = new google.auth.OAuth2(
         client_id, client_secret, redirect_uris[0]);
