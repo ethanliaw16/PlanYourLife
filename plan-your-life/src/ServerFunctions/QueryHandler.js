@@ -2,6 +2,7 @@ module.exports.processquery = processQuery;
 
 var Kwi = require('./KeyWordIdentifier');
 var Calendar = require('./calendar');
+var TaskHandler = require('./tasks');
 //var CalendarEventRemove = require('../../calendar/calendarDeleteEvent');
 //var CalendarListIds = require('../../calendar/calendarListIds');
 
@@ -10,8 +11,6 @@ var Calendar = require('./calendar');
 function processQuery(query, res){
     var response = Kwi.KWI(query.text);
     console.log(response.where);
-    console.log(response.item);
-    console.log(response.item);
     console.log(response.time);
     //var firstTenEvents = Calendar;
     if(response.time instanceof Date) {
@@ -34,10 +33,17 @@ function processQuery(query, res){
     'end': {'dateTime': endTime, 'timeZone': 'America/New_York'}
     };
 
+    var taskObject = {'title' : response.item}
+    var listObject = {'title' : response.destination}
     if(response.add == 'true') {
-      console.log('Adding event ' + eventObject);
-      Calendar.createEvent(eventObject);
-      res.send({'message':'Event successfully added.'});
+      if(response.item != null) {
+        TaskHandler.newTask(taskObject, listObject);
+      }
+      else {
+        console.log('Adding event ' + eventObject);
+        Calendar.createEvent(eventObject);
+        res.send({'message':'Event successfully added.'});
+      }
     }
     else if (response.remove == 'true') {
       console.log('Removing event ' + eventObject);
