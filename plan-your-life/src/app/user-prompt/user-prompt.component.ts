@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { PylService } from '../planyourlife.service';
 import { HttpClient } from '@angular/common/http';
 import { Query } from '../Query';
-
+import { Event } from '../Event';
 @Component({
   selector: 'app-user-prompt',
   templateUrl: './user-prompt.component.html',
@@ -16,9 +16,11 @@ export class UserPromptComponent implements OnInit {
   ngOnInit() {
   }
 
-  Lists: String[];
+  events: Event[];
 
   query: Query;
+
+  response: Query;
 
   logSubmit(){
     console.log("Query Entered successfully.");
@@ -33,6 +35,7 @@ export class UserPromptComponent implements OnInit {
   }
 
   getAllLists(): void{
-    this.pylService.retrieveWordLists().subscribe(lists => this.Lists = lists);
+    this.pylService.retrieveWordLists().subscribe(events => this.events = events);
+    console.log(this.events);
   }
 }
