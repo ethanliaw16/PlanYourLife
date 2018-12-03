@@ -10,7 +10,7 @@ router.post('/newquery', function(req, res){
   queryhandler.processquery(req.body, res);
   console.log('response: ' + res);
   //res.send('reached api layer on new query. ' + res.body);
-  });
+  }); 
 
 router.get('/events', function(req, res){
   console.log('reached api layer for list retrieval.');

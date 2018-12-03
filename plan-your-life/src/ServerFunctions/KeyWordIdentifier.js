@@ -4,7 +4,7 @@ By: Christian Bonnell
 
 // Prompt object
 // var prompt = require('prompt');
-var date = require('date');
+//var date = require('date');
 
 var keywords = [];
 
