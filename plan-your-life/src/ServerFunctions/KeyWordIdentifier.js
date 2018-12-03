@@ -12,6 +12,7 @@ var keys = [];
 var keyValues = [];
 
 // The following variables hold the values of the JSON file
+var newList = 'false'
 var add = 'false';
 var download = 'false';
 var remind = 'false';
@@ -64,37 +65,6 @@ function resetFields(){
 }
 
 /*
-Function that identifiese keywords of command and sends a JSON file to backend for API calls requests.
-Done through helper method
-s*/
-function KWI(command){
-	resetFields();
-	getKeyWords();
-	command = command.toLowerCase();
-	command = command.split(' ');
-	extractCache(command);
-	updateJSON();
-	userEvent = createEvent();
-	if(
-		add === 'false' && 
-		download === 'false' && 
-		remind === 'false' && 
-		remove === 'false'){
-		throw new Error("Input does not contain the add, download, remind or false key words.");
-	} else if(
-		destination === '' && 
-		item === '' && 
-		time === '' && 
-		where === '' && 
-		event === '' && 
-		duration === ''){
-		throw new Error("No content provided(i.e. Destination, time, location, etc.");
-	}
-	// console.log(userEvent);
-	return userEvent;
-}
-
-/*
 Pulls the key words from the server.
 Currently just populates the keywords array until back end integration is complete
 */
@@ -111,6 +81,7 @@ function getKeyWords(){
 	keywords.push('on');
 	keywords.push('me');
 	keywords.push('event');
+	keywords.push('list');
 }
 
 /*
@@ -142,6 +113,7 @@ function extractCache(command){
 function updateJSON(){
 
 	// console.log(keys);
+	
 	switch(keys[1]){
 		case 'add':
 			if(keys[2] != 'event'){
@@ -151,7 +123,11 @@ function updateJSON(){
 		case 'remind':
 			remindRequest();
 			break;
+		case 'list':
+			newListRequest();
+			break;
 		default:
+			throw new Error("No keyword provided.");
 			break;
 	}
 
@@ -204,6 +180,23 @@ function remindRequest(){
 	}
 }
 
+/*
+Function that parses an 'new list' request to populate the corresponding JSON
+*/
+function newListRequest(){
+
+	foundList = false;
+
+	for(i = 1; i < keys.length; i++){
+		if(keys[i] === 'list' && !foundList){
+			newList = 'true';
+			destination = keyValues[i];
+		} else {
+			// console.log('Out of key words');
+		}
+	}
+}
+
 function convertDay(dateTime){
 	var date = new Date();
 	if(dateTime === 'monday'){
@@ -236,6 +229,7 @@ function getNextDayOfWeek(date, dayOfWeek) {
 
 function createEvent(){
 	var newEvent = {
+		'newList': newList,
 		'add': add,
 		'download': download,
 		'remind': remind,
@@ -263,9 +257,6 @@ function KWI(command){
 	extractCache(command);
 	updateJSON();
 	userEvent = createEvent();
-	if(add === 'false' && download === 'false' && remind === 'false' && remove === 'false'){
-		throw("Input does not contain the add, download, remind or false key words.");
-	}
 	// console.log(userEvent);
 	return userEvent;
 }
