@@ -110,6 +110,7 @@ function getKeyWords(){
 	keywords.push('for');
 	keywords.push('on');
 	keywords.push('me');
+	keywords.push('event');
 }
 
 /*
@@ -143,9 +144,12 @@ function updateJSON(){
 	// console.log(keys);
 	switch(keys[1]){
 		case 'add':
-			addRequest();
-			break;
+			if(keys[2] != 'event'){
+				addRequest();
+				break;
+			}
 		case 'remind':
+			console.log(keys[2]);
 			remindRequest();
 			break;
 		default:
@@ -183,7 +187,7 @@ function remindRequest(){
 		// 	remind = 'true';
 		// 	event = keyValues[i];
 		// } else 
-		if(keys[i] === 'to' && !foundTo){ //only treats 'to' as a keyword once when parsing the string
+		if(keys[i] === 'to' || keys[i] === 'event' && !foundTo){ //only treats 'to' as a keyword once when parsing the string
 			remind = 'true';
 			foundTo = true;
 			event = keyValues[i];
@@ -217,6 +221,8 @@ function convertDay(dateTime){
 		return getNextDayOfWeek(date, 6);
 	} else if (dateTime === 'sunday'){
 		return getNextDayOfWeek(date, 7);
+	} else {
+		return dateTime;
 	}
 }
 
