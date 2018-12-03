@@ -85,7 +85,7 @@ describe("KeyWordIdentifierTest", function() {
 		assert.equal(JSON.stringify(intendedEvent3), JSON.stringify(kwiEvent3));
 		done();
 	});
-	it("create JSON for basic reminder \"remind me to go running for 30 minutes on saturday\"", function(done) {
+	it("create JSON for basic reminder \"remind me to go running for 30 minutes on saturday - must check manually to ensure date is correct\"", function(done) {
 		var intendedEvent4 = {
 			'newList': 'false',
 			'add': 'false',
@@ -99,7 +99,7 @@ describe("KeyWordIdentifierTest", function() {
 			'event': 'go running',
 			'duration': '30 minutes',
 		};
-		var kwiEvent4 = KeyWordIdentifier.KWI("remind me to go running for 30 minutes on saturday - must check manually to ensure date is correct");
+		var kwiEvent4 = KeyWordIdentifier.KWI("remind me to go running for 30 minutes on saturday");
 		assert.equal(JSON.stringify(intendedEvent4), JSON.stringify(kwiEvent4));
 		done();		
 	});

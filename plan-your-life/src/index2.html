@@ -5,17 +5,7 @@
   <base href="/">
 
     <link href="normalize.css" rel="stylesheet">
-   
-    <!-- Latest compiled and minified CSS -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-
-    <!-- jQuery library -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-
-    <!-- Latest compiled JavaScript -->
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-   
-
+    
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
       rel="stylesheet">
 
@@ -23,7 +13,15 @@
 
     <script src="https://apis.google.com/js/platform.js" async defer></script>
 
-    
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+    <!-- jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+ 
+    <!-- Latest compiled JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
     <link rel="stylesheet" href="./styles.css">
     <link href="./modal.html">
 
@@ -107,17 +105,20 @@
         <app-user-prompt></app-user-prompt>
       </li>
     -->
-    
 
     <nav class="navbar navbar-fixed-top">
       <div class="container-fluid">
+        <!--------------------- header image --------------------->
+        <div class="navbar-header">
+          <a class="navbar-brand">
+              <img src="src/app/logo.png" height="70px">
+          </a>
+        </div>
 
-        <!--------------------- sign out --------------------->
-        <ul class="nav navbar-nav" id="nav1">
-            <li id="nav3">
-              <button type="button" class="btn btn-default" onclick="signOut();">Sign out</button>
-            
-            </li>
+        <!--------------------- search form --------------------->
+        <ul class="nav navbar-nav">
+            <li><app-root></app-root></li>
+            <li><button type="button" class="btn btn-outline-secondary" onclick="signOut();">Sign out</button></li>
         </ul> 
 
         
@@ -141,8 +142,8 @@
               <div class="g-signin2" data-onsuccess="onSignIn"></div>
             </li>
 
-            <li id="nav3">
-              <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#FAQ">  
+            <li>
+              <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#FAQ">  
                 <span class="glyphicon glyphicon-question-sign"></span> Help
               </button>
             </li>
@@ -151,12 +152,15 @@
         </div>
      </nav>
    
-     <div class="containLogo">
-     <img src="src/app/logo.png" height="300px">
+
+     
+
+
+    <div class="row">
+        <div class="col-xs-6"><p>Calendar display</p></div>
+        <div class="col-xs-6"><p>Task display</p></div>
     </div>
-    <div class="searchContain">
-    <app-root></app-root>
-  </div>
+
 
     
 
