@@ -15,7 +15,7 @@ var taskData = {
     'notes': 'Me want cookie',
 }
 
-var tasklist;
+var tasklist = {'title': 'A Task List'};
 
 
 newTask(taskData);
