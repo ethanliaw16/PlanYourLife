@@ -92,6 +92,7 @@ function extractCache(command){
 	var keyword = '';
 	var values = '';
 
+	// Creates an array containing all the words within a String for easy manipulation
 	command.forEach(function(element){
 		if (keywords.includes(element)) {
 			keys.push(keyword.trim());
@@ -110,6 +111,7 @@ function extractCache(command){
 }
 
 // Goes through the extracted cache and assigns the JSON values the correct values
+// Check Design Document to understand what each key word should represent
 function updateJSON(){
 
 	// console.log(keys);
@@ -197,6 +199,8 @@ function newListRequest(){
 	}
 }
 
+=======
+// Converts the name of a day of the week(monday,..., sunday) to the numerical equivalent(1,..., 7)
 function convertDay(dateTime){
 	var date = new Date();
 	if(dateTime === 'monday'){
@@ -218,6 +222,8 @@ function convertDay(dateTime){
 	}
 }
 
+// Given a specific day and a day of the week (Monday = 1,..., Sunday = 7)
+// It will return the date of the next occuring Monday,..., Sunday
 function getNextDayOfWeek(date, dayOfWeek) {
 
     var resultDate = new Date(date.getTime());
@@ -227,6 +233,8 @@ function getNextDayOfWeek(date, dayOfWeek) {
     return resultDate;
 }
 
+
+//Creates the JSON object using the fields that were updated by the KWI
 function createEvent(){
 	var newEvent = {
 		'newList': newList,

@@ -1,159 +1,84 @@
+/* ------------------------ BODY ------------------------*/
 body{
     background-color: #00e5ff;
+    padding-top: 100px;
+    min-width: 1024px;
 }
 
-.search {
-    overflow: hidden;
-    display: flex;
-}
-
-.search input[type=text] .search-container button {
-    padding: 6px;
-    margin-top: 8px;
-    margin-right: 16px;
-    border: none;
-    font-size: 17px;
-    float: none;
-    text-align: left;
-    width: 25%;
-    margin: 0;
-    padding: 14px;
+.col-xs-6 > p{
+    padding: 20px;
 }
 
 input{
     border: none;
-    width: 60%;
-}
-
-.submit{
-    background-color: #ab47bc;
-    border: none;
-    color: white;
-    padding: 10px 20px;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 20px;
-}
-
-.topRight-container{
-    padding-top: 2%;
-    padding-left: 2%;
-    align-items: center;
-    position: absolute;
-    justify-content: center;
-}
-
-.topRightButton-container{
-    padding-top: 6%;
-    padding-left: 2%;
-    align-items: center;
-    position: absolute;
-    justify-content: center;
-}
-
-.search-container {
-    font-size: 25px;
     width: 100%;
 }
 
-.search .search-container button:hover {
-    background: #ccc;
+/* ------------------------ SEARCH BAR ------------------------ */
+
+/* contains search section */
+.search {
+    width: 100%;
+    font-size: 25px;
 }
 
-.question {
-    font-size: 30px;
-    color: white;
-    left: 100px;
-}
-
+/* search bar */
 input[type=text] {
     padding: 12px 20px;
     box-sizing: border-box;
 }
 
-.material-icons.md-36 { font-size: 36px; color:white;}
-
+/* search button */
 button[type=submit]{
     background-color: darkblue;
-    padding: 9px 20px;
+    padding: 11.5px 20px;
     border: none;
     position: absolute;
 }
 
+/* search button icon */
+.material-icons.md-36 { font-size: 36px; color:white;}
+
+
+/* ------------------------ NAV BAR ------------------------*/
+.navbar{
+    height: 100px;
+    background-color: wheat;
+    min-width: 1024px;
+}
+
+.container-fluid{
+    height: 100px;
+}
+    
+
+.navbar-header{
+    min-height: 100px;
+}
+
+#nav1{
+    padding-top: 24px;
+    padding-right: 24px;
+}
+
+/* ------------------------ SIGN IN BUTTON ------------------------*/
 button[type=sign]{
     background-color: darkblue;
     color:white;
     padding: 12px 20px;
     border: none;
-    position: absolute;
+    top: 50px;
 }
 
-.lower-container{
-    margin-top: 10%;
-    height: 30%;
-    margin-bottom: auto;
-    width: 100%;
-    min-height: 300px;
+#nav2{
+    padding-right: 24px;
 }
 
-.lLeft-container{
-    background-color: white;
-    padding-bottom: 2%;
-    margin-left: 2%;
-    margin-bottom: auto;
-    width: 45%;
-    position: absolute;
-    float: left;
-}
-
-.lRight-container{
-    background-color:white;
-    margin-bottom: auto;
-    padding-bottom: 2%;
-    margin-left: 52%;
-    margin-bottom: auto;
-    width: 45%;
-    position: absolute;
-}
-
-ul {
-    list-style-type: none;
-    margin: 0;
-    padding: 0;
-    overflow: hidden;
-    background-color: gray;
-    vertical-align: middle;
-    position: relative;
-}
-
-
-li a {
-    display: block;
-    color: #666;
-    text-align: center;
-    padding: 14px 16px;
-    text-decoration: none;
-}
-
-.navbar{
+.g-signin2{
     height: 100px;
-    background-color: gray;
 }
 
-img {
-    height: 75px;
-    width: 125px;
+.modal-body > br{
+    line-height: 50%;
 }
-
-.navbar-nav {
-    height: 100%;
-    width: 85%;
-    left: 15%;
-}
-
-.nav-item {
-    width: 50%;
-}
-
-
+  
