@@ -149,7 +149,6 @@ function updateJSON(){
 				break;
 			}
 		case 'remind':
-			console.log(keys[2]);
 			remindRequest();
 			break;
 		default:
