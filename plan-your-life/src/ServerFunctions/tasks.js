@@ -37,8 +37,8 @@ function newTaskList (taskDetails) {
  * Wrapper function to insert task
  * @param taskDetails A JSON object holding taskdetails
  */
-function newTask (taskDetails, taskList) {
-    tasklist = taskList;
+function newTask (taskDetails) {
+    tasklist = taskDetails;
     console.log(tasklist);
     fs.readFile('credentials.json', (err, content) => {
         task = taskDetails;
@@ -69,7 +69,7 @@ function insertTask(auth) {
     const service = google.tasks({ version: 'v1', auth });
     service.tasks.insert({
         auth: auth,
-        tasklist: tasklist,
+        tasklist: '@default',
         resource: task,
     }, (err, res) => {
         if (err) return console.error('The API returned an error: ' + err);
