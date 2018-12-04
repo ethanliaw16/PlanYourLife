@@ -37,8 +37,8 @@ function newTaskList (taskDetails) {
  * Wrapper function to insert task
  * @param taskDetails A JSON object holding taskdetails
  */
-function newTask (taskDetails, taskList) {
-    tasklist = taskList;
+function newTask (taskDetails) {
+    tasklist = taskDetails;
     console.log(tasklist);
     fs.readFile('credentials.json', (err, content) => {
         task = taskDetails;
