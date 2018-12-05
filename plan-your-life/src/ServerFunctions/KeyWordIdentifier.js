@@ -83,6 +83,7 @@ function getKeyWords(){
 	keywords.push('me');
 	keywords.push('event');
 	keywords.push('list');
+	keywords.push('tomorrow');
 }
 
 /*
@@ -115,7 +116,7 @@ function extractCache(command){
 // Check Design Document to understand what each key word should represent
 function updateJSON(){
 
-	// console.log(keys);
+	console.log(keys);
 	
 	switch(keys[1]){
 		case 'add':
@@ -160,6 +161,10 @@ function remindRequest(){
 
 	foundTo = false; //boolean to determine if the first 'to' indicating the request is a remind request has been found
 
+	if(keys.includes('tomorrow')){
+		setTomorrow();
+	}
+
 	for(i = 1; i < keys.length; i++){
 		// if(keys[i] === 'remind'){ 
 		// 	remind = 'true';
@@ -181,6 +186,16 @@ function remindRequest(){
 			// console.log('Out of key words');
 		}
 	}
+}
+
+/*
+Set the 'time' field to tomorrows date
+*/
+function setTomorrow(){
+	var today = new Date();
+	var tomorrow = new Date();
+	tomorrow.setDate(today.getDate() + 1);
+	time = tomorrow;
 }
 
 /*

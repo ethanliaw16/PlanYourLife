@@ -215,8 +215,8 @@ describe("KeyWordIdentifierTest", function() {
 		assert.equal(JSON.stringify(intendedEvent10), JSON.stringify(kwiEvent10));
 		done();		
 	});
-	it("create JSON for calendar event \"remind me to go to class on friday - must check manually\"", function(done) {
-		var intendedEvent12 = {
+	it("create JSON for basic reminder \"remind me to go running for 30 minutes tomorrow - must check manually to ensure date is correct\"", function(done) {
+		var intendedEvent11 = {
 			'newList': 'false',
 			'add': 'false',
 			'download': 'false',
@@ -224,13 +224,13 @@ describe("KeyWordIdentifierTest", function() {
 			'remove': 'false',
 			'destination': '',
 			'item': '',
-			'time': 'friday',
+			'time': 'tomorrow',
 			'where': '',
-			'event': 'class',	
-			'duration': '',
+			'event': 'go running',
+			'duration': '30 minutes',
 		};
-		var kwiEvent12 = KeyWordIdentifier.KWI("remind me to go to class on friday");
-		assert.equal(JSON.stringify(intendedEvent12), JSON.stringify(kwiEvent12));
+		var kwiEvent11 = KeyWordIdentifier.KWI("remind me to go running for 30 minutes tomorrow");
+		assert.equal(JSON.stringify(intendedEvent11), JSON.stringify(kwiEvent11));
 		done();		
 	});
 	it("Testing for getting the next monday (represented by the number 1) of the week", function(done) {

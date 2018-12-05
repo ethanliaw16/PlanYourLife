@@ -18,10 +18,7 @@ export class UserPromptComponent implements OnInit {
 
   events: Event[];
 
-  query: Query;
-
-  response: Query;
-
+  
   logSubmit(){
     console.log("Query Entered successfully.");
   }
@@ -34,8 +31,5 @@ export class UserPromptComponent implements OnInit {
     this.pylService.sendNewQuery(query);
   }
 
-  getAllLists(): void{
-    this.pylService.retrieveWordLists().subscribe(events => this.events = events);
-    console.log(this.events);
-  }
+  
 }
