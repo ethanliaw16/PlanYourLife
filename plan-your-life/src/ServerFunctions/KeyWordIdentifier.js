@@ -116,7 +116,7 @@ function extractCache(command){
 // Check Design Document to understand what each key word should represent
 function updateJSON(){
 
-	console.log(keys);
+	// console.log(keys);
 	
 	switch(keys[1]){
 		case 'add':

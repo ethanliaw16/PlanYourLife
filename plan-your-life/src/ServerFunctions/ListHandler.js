@@ -4,7 +4,8 @@ var Calendar = require('./calendar');
 var events;
 
 function getEvents(req, res) {
-    events = await Calendar.getEvents();
+    events = Calendar.getEvents();
+    // events = await Calendar.getEvents();
     console.log('Events: ' + events);
     return events;
 }
