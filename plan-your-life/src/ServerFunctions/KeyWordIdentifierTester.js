@@ -193,6 +193,24 @@ describe("KeyWordIdentifierTest", function() {
 		assert.equal(JSON.stringify(intendedEvent10), JSON.stringify(kwiEvent10));
 		done();		
 	});
+	it("create JSON for basic reminder \"remind me to go running for 30 minutes tomorrow - must check manually to ensure date is correct\"", function(done) {
+		var intendedEvent11 = {
+			'newList': 'false',
+			'add': 'false',
+			'download': 'false',
+			'remind': 'true',
+			'remove': 'false',
+			'destination': '',
+			'item': '',
+			'time': 'tomorrow',
+			'where': '',
+			'event': 'go running',
+			'duration': '30 minutes',
+		};
+		var kwiEvent11 = KeyWordIdentifier.KWI("remind me to go running for 30 minutes tomorrow");
+		assert.equal(JSON.stringify(intendedEvent11), JSON.stringify(kwiEvent11));
+		done();		
+	});
 	it("Testing for getting the next monday (represented by the number 1) of the week", function(done) {
 		var date = new Date(2018, 10, 20); //10 is for November
 		resultDate = KeyWordIdentifier.getNextDayOfWeek(date, 1);
