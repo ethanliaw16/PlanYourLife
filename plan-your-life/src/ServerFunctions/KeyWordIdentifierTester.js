@@ -31,7 +31,25 @@ describe("KeyWordIdentifierTest", function() {
 	// 	done();
 
 	// });
-	it("create JSON for basic add to list \"add eggs to groceries\"", function(done) {
+	it("create JSON for basic add to list \"add Linear homework\"", function(done) {
+		var intendedEvent1 = {
+			'newList': 'false',
+			'add': 'true',
+			'download': 'false',
+			'remind': 'false',
+			'remove': 'false',
+			'destination': '',
+			'item': 'linear homework',
+			'time': '',
+			'where': '',
+			'event': '',
+			'duration': '',
+		};
+		var kwiEvent1 = KeyWordIdentifier.KWI("add linear homework");
+		assert.equal(JSON.stringify(intendedEvent1), JSON.stringify(kwiEvent1));
+		done();	
+	});
+	it("create JSON for basic add to list specific list \"add eggs to groceries\"", function(done) {
 		var intendedEvent1 = {
 			'newList': 'false',
 			'add': 'true',
@@ -106,6 +124,8 @@ describe("KeyWordIdentifierTest", function() {
 	it("check for error when remind keyword is not used \"pick up tom\"", function(done) {
 		try {
 		KeyWordIdentifier.KWI("pick up tom");
+		assert.equal(1 === 0);
+		done();
 		}
 		catch(err){
 			assert.equal('Error: No keyword provided.', err.toString());
@@ -115,9 +135,11 @@ describe("KeyWordIdentifierTest", function() {
 	it("check for error when no content is provided \"remind me to\"", function(done) {
 		try {
 		KeyWordIdentifier.KWI("remind me");
+		assert.equal(1 === 0);
+		done();
 		}
 		catch(err){
-			assert.equal('No content provided(i.e. Destination, time, location, etc.)', err);
+			assert.equal('Error: No content provided with request.', err.toString());
 			done();	
 		}		
 	});

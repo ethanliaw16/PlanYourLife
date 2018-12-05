@@ -52,6 +52,7 @@ function resetFields(){
 	keywords = [];
 	keys = [];
 	keyValues = [];
+	newList = 'false';
 	add = 'false';
 	download = 'false';
 	remind = 'false';
@@ -268,6 +269,21 @@ function createEvent(){
 }
 
 /*
+Function that determines if the payload for the request is empty
+*/
+function checkPayload(){
+	if(destination === ''
+	&& item === ''
+	&& time === ''
+	&& where === ''
+	&& event === ''
+	&& duration === ''
+	&& add === 'false'){
+		throw new Error('No content provided with request.');
+	}
+}
+
+/*
 Function that identifiese keywords of command and sends a JSON file to backend for API calls requests.
 Done through helper method
 s*/
@@ -279,6 +295,8 @@ function KWI(command){
 	extractCache(command);
 	updateJSON();
 	userEvent = createEvent();
+	checkPayload();
+	// console.log(userEvent);
 	// console.log(userEvent);
 	return userEvent;
 }
