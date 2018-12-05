@@ -17,9 +17,6 @@ var taskData = {
 
 var tasklist = {'title': 'A Task List'};
 
-
-newTask(taskData);
-
 /**
  * Wrapper function to list all taskslists and ids of taskslists.
  * @param taskDetails A JSON object holding task list details
