@@ -34,10 +34,12 @@ function processQuery(query, res){
     };
 
     var taskObject = {'title' : response.item}
+    
     var listObject = {'title' : response.destination}
+
     if(response.add == 'true') {
       if(response.item != null) {
-        TaskHandler.newTask(taskObject, listObject);
+        TaskHandler.newTask(taskObject);
       }
       else {
         console.log('Adding event ' + eventObject);
