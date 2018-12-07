@@ -12,6 +12,7 @@ var keys = [];
 var keyValues = [];
 
 // The following variables hold the values of the JSON file
+var newList = 'false'
 var add = 'false';
 var download = 'false';
 var remind = 'false';
@@ -64,39 +65,6 @@ function resetFields(){
 }
 
 /*
-Function that identifiese keywords of command and sends a JSON file to backend for API calls requests.
-Done through helper method
-s*/
-function KWI(command){
-	resetFields();
-	getKeyWords();
-	command = command.toLowerCase();
-	command = command.split(' ');
-	extractCache(command);
-	updateJSON();
-	userEvent = createEvent();
-	// Throws an error when none of the primary keywords are given by the user.
-	// Without them we cannot know which Google Planning Tool should be updated
-	if(
-		add === 'false' && 
-		download === 'false' && 
-		remind === 'false' && 
-		remove === 'false'){
-		throw("Input does not contain the add, download, remind or false key words.");
-	} else if(
-		destination === '' && 
-		item === '' && 
-		time === '' && 
-		where === '' && 
-		event === '' && 
-		duration === ''){
-		throw("No content provided(i.e. Destination, time, location, etc.)");
-	}
-	// console.log(userEvent);
-	return userEvent;
-}
-
-/*
 Pulls the key words from the server.
 Currently just populates the keywords array until back end integration is complete
 */
@@ -111,6 +79,9 @@ function getKeyWords(){
 	keywords.push('from');
 	keywords.push('for');
 	keywords.push('on');
+	keywords.push('me');
+	keywords.push('event');
+	keywords.push('list');
 }
 
 /*
@@ -143,21 +114,60 @@ function extractCache(command){
 // Check Design Document to understand what each key word should represent
 function updateJSON(){
 
+	// console.log(keys);
+	
+	switch(keys[1]){
+		case 'add':
+			if(keys[2] != 'event'){
+				addRequest();
+				break;
+			}
+		case 'remind':
+			remindRequest();
+			break;
+		case 'list':
+			newListRequest();
+			break;
+		default:
+			throw new Error("No keyword provided.");
+			break;
+	}
+
+}
+
+/*
+Function that parses an 'add' request to populate the corresponding JSON
+*/
+function addRequest(){
+
 	for(i = 1; i < keys.length; i++){
 		if(keys[i] === 'add'){
 			add = 'true';
 			item = keyValues[i];
-		} else if(keys[i] === 'download'){ // Only implemented for downloading lists
-			download = 'true';
-			destination = keyValues[i];
-		} else if(keys[i] === 'remind'){ 
-			remind = 'true';
-			event = keyValues[i];
-		} else if(keys[i] === 'remove'){
-			remove = 'true';
-			item = keyValues[i];
 		} else if(keys[i] === 'to'){
 			destination = keyValues[i];
+		} else {
+			// console.log('Out of key words');
+		}
+	}
+}
+
+/*
+Function that parses a 'remind' request to populate the corresponding JSON
+*/
+function remindRequest(){
+
+	foundTo = false; //boolean to determine if the first 'to' indicating the request is a remind request has been found
+
+	for(i = 1; i < keys.length; i++){
+		// if(keys[i] === 'remind'){ 
+		// 	remind = 'true';
+		// 	event = keyValues[i];
+		// } else 
+		if(keys[i] === 'to' || keys[i] === 'event' && !foundTo){ //only treats 'to' as a keyword once when parsing the string
+			remind = 'true';
+			foundTo = true;
+			event = keyValues[i];
 		} else if(keys[i] === 'on'){
 			time = convertDay(keyValues[i]);
 		} else if(keys[i] === 'at'){
@@ -166,6 +176,23 @@ function updateJSON(){
 			where = keyValues[i];
 		} else if(keys[i] === 'for'){
 			duration = keyValues[i];
+		} else {
+			// console.log('Out of key words');
+		}
+	}
+}
+
+/*
+Function that parses an 'new list' request to populate the corresponding JSON
+*/
+function newListRequest(){
+
+	foundList = false;
+
+	for(i = 1; i < keys.length; i++){
+		if(keys[i] === 'list' && !foundList){
+			newList = 'true';
+			destination = keyValues[i];
 		} else {
 			// console.log('Out of key words');
 		}
@@ -189,6 +216,8 @@ function convertDay(dateTime){
 		return getNextDayOfWeek(date, 6);
 	} else if (dateTime === 'sunday'){
 		return getNextDayOfWeek(date, 7);
+	} else {
+		return dateTime;
 	}
 }
 
@@ -207,6 +236,7 @@ function getNextDayOfWeek(date, dayOfWeek) {
 //Creates the JSON object using the fields that were updated by the KWI
 function createEvent(){
 	var newEvent = {
+		'newList': newList,
 		'add': add,
 		'download': download,
 		'remind': remind,
@@ -220,6 +250,22 @@ function createEvent(){
 	};
 	// console.log(newEvent);
 	return newEvent;
+}
+
+/*
+Function that identifiese keywords of command and sends a JSON file to backend for API calls requests.
+Done through helper method
+s*/
+function KWI(command){
+	resetFields();
+	getKeyWords();
+	command = command.toLowerCase();
+	command = command.split(' ');
+	extractCache(command);
+	updateJSON();
+	userEvent = createEvent();
+	// console.log(userEvent);
+	return userEvent;
 }
 
 module.exports.KWI = KWI;
