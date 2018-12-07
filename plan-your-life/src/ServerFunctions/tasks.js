@@ -7,6 +7,7 @@ const SCOPES = ['https://www.googleapis.com/auth/tasks'];
 const TOKEN_PATH = 'token.json';
 
 var task;
+var taskholder;
 
 var taskData = {
     'title': 'Cookies',
@@ -17,18 +18,31 @@ var tasklist = {
     'title': 'New Task List',
 }
 
-newTask(taskData);
+//getAll();
 
 /**
  * Wrapper function to list all taskslists and ids of taskslists.
  * @param taskDetails A JSON object holding task list details
  */
-function newTaskList (taskDetails) {
+function listAll(taskDetails) {
     fs.readFile('credentials.json', (err, content) => {
         task = taskDetails;
         if (err) return console.log('Error loading client secret file:', err);
         // Authorize a client with credentials, then call the Google Tasks API.
-        authorize(JSON.parse(content), insertTaskList);
+        authorize(JSON.parse(content), listTaskLists);
+    });
+}
+
+/**
+ * Wrapper function to list all taskslists and ids of taskslists.
+ * @param taskDetails A JSON object holding task list details
+ */
+function getAll(taskDetails) {
+    fs.readFile('credentials.json', (err, content) => {
+        task = taskDetails;
+        if (err) return console.log('Error loading client secret file:', err);
+        // Authorize a client with credentials, then call the Google Tasks API.
+        authorize(JSON.parse(content), get);
     });
 }
 
@@ -36,20 +50,20 @@ function newTaskList (taskDetails) {
  * Wrapper function to insert task
  * @param taskDetails A JSON object holding taskdetails
  */
-function newTask (taskDetails) {
+function newTask(taskDetails) {
     fs.readFile('credentials.json', (err, content) => {
         task = taskDetails;
         if (err) return console.log('Error loading client secret file:', err);
         // Authorize a client with credentials, then call the Google Tasks API.
         authorize(JSON.parse(content), insertTask);
     });
-    }
+}
 
 /**
  * Wrapper function to insert task list
  * @param taskDetails A JSON object holding task list details
  */
-function newTaskList (taskDetails) {
+function newTaskList(taskDetails) {
     fs.readFile('credentials.json', (err, content) => {
         task = taskDetails;
         if (err) return console.log('Error loading client secret file:', err);
@@ -97,22 +111,57 @@ function insertTaskList(auth) {
  * @param {google.auth.OAuth2} auth An authorized OAuth2 client.
  */
 function listTaskLists(auth) {
-    const service = google.tasks({version: 'v1', auth});
+    const service = google.tasks({ version: 'v1', auth });
     service.tasklists.list({
-      maxResults: 10,
     }, (err, res) => {
-      if (err) return console.error('The API returned an error: ' + err);
-      const taskLists = res.data.items;
-      if (taskLists) {
-        console.log('Task lists:');
-        taskLists.forEach((taskList) => {
-          console.log(`${taskList.title} (${taskList.id})`);
-        });
-      } else {
-        console.log('No task lists found.');
-      }
+        if (err) return console.error('The API returned an error: ' + err);
+        const taskLists = res.data.items;
+        if (taskLists) {
+            console.log('Task lists:');
+            taskLists.forEach((taskList) => {
+                console.log(`${taskList.title} (${taskList.id})`);
+                service.tasks.list({
+                    tasklist: taskList.id,
+                }, (err, res) => {
+                    if (err) return console.error('The API returned an error: ' + err);
+                    const tasks = res.data.items;
+                    if (tasks) {
+                        console.log('Tasks:');
+                        tasks.forEach((task) => {
+                            console.log(`${task.title} (${task.id})`);
+                        });
+                    } else {
+                        console.log('No tasks found.');
+                    }
+                });
+            });
+        } else {
+            console.log('No task lists found.');
+        }
     });
-  }
+}
+
+/**
+ * gets suff
+ * @param {google.auth.OAuth2} auth An authorized OAuth2 client.
+ */
+/*function get(auth) {
+    const service = google.tasks({ version: 'v1', auth });
+    service.tasklists.get({
+        tasklist: '@default',
+    }, (err, res) => {
+        if (err) return console.error('The API returned an error bloo: ' + err);
+        const taskLists = res.data.items;
+        if (taskLists) {
+            console.log('Task lists:');
+            taskLists.forEach((taskList) => {
+                console.log(`${taskList.title} (${taskList.id})`);
+            });
+        } else {
+            console.log('No task lists found.');
+        }
+    });
+}*/
 
 /**
  * Create an OAuth2 client with the given credentials, and then execute the
