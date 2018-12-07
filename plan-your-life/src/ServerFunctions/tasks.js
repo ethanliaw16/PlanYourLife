@@ -5,7 +5,7 @@ const readline = require('readline');
 const { google } = require('googleapis');
 
 // If modifying these scopes, delete token.json.
-const SCOPES = ['https://www.googleapis.com/auth/tasks'];
+const SCOPES = ['https://www.googleapis.com/auth/tasks', 'https://www.googleapis.com/auth/calendar'];
 const TOKEN_PATH = 'token.json';
 
 var task;
