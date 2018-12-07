@@ -13,6 +13,7 @@ export class PylService{
   constructor(private http: HttpClient) { }
 
   sendNewQuery(query: Query): void{
+    console.log('query ' + query.text);
     var response = this.http.post<Query>('http://localhost:8000/api/newquery', query).subscribe();
     console.log('Response: ' + response);
     //return response.unsubscribe;
