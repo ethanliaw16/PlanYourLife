@@ -199,18 +199,10 @@
     }
   }
   </script>
-  <script data-main="" src="/require.js"></script>
+  
   <script type="module" src="script.js"></script>
 
-  <script>
-    function wipeToken() {
-      const fs = require('fs');
-      fs.unlink('../ServerFunctions/token.json', (err) => {
-        if (err) throw err;
-        console.log('successfully deleted /ServerFunctions/token.json');
-      });
-    }
-  </script>
+  
 
 
 
