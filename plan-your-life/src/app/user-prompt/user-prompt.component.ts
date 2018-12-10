@@ -10,25 +10,27 @@ import { Event } from '../Event';
 })
 
 export class UserPromptComponent implements OnInit {
+  events: Event[];
+  query: Query = {
+    text: ''
+  }
 
   constructor(private pylService: PylService, private http: HttpClient ) { }
 
   ngOnInit() {
   }
 
-  events: Event[];
-
+  
   
   logSubmit(){
     console.log("Query Entered successfully.");
   }
 
-  sendQuery(text: string): void{
-
-    var query = new Query();
-    query.text = text;
-    console.log("Query recieved, " + query);
-    this.pylService.sendNewQuery(query);
+  sendQuery(): void{
+    
+    console.log("Query recieved, " + this.query.text);
+    this.pylService.sendNewQuery(this.query);
+    this.query.text = '';
   }
 
   
