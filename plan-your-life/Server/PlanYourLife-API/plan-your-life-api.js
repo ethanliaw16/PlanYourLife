@@ -16,8 +16,8 @@ router.post('/newquery', function(req, res){
 
 router.post('/newauthkey', function (req, res){
   console.log('popup successfully called to api');
-  console.log(req);
-  authKeyHandler.authorizeUser(req.body, res);
+  console.log(req.body.text);
+  authKeyHandler.authorizeUser(req.body.text, res);
 });
 
 router.get('/events', function(req, res){

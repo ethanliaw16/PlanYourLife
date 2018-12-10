@@ -3,6 +3,7 @@ import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { Query } from '../app/Query';
 import { Event } from '../app/Event';
+import { Key } from '../app/Key';
 
 @Injectable({
   providedIn: 'root'
@@ -19,7 +20,7 @@ export class PylService{
     //return response.unsubscribe;
   }
 
-  sendAuthKey(key: string): void{
+  sendAuthKey(key: Key): void{
     var response = this.http.post<string>('http://localhost:8000/api/newauthkey', key).subscribe();
     console.log(response);
   }

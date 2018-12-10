@@ -2,6 +2,7 @@ import { Component, OnInit, Inject } from '@angular/core';
 import { PylService } from '../planyourlife.service';
 import { HttpClient } from '@angular/common/http';
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
+import { Key } from '../Key';
 
 export interface DialogData {
   key: string
@@ -16,21 +17,23 @@ export class AppSignInComponent implements OnInit {
   ngOnInit() {
   }
 
-  key: string;
-
+  
+  
   constructor(private pylService: PylService, private http: HttpClient, public dialog: MatDialog) { }
 
   openAuthKeyPopup(): void {
+    
+    var key = new Key();
     const dialogRef = this.dialog.open(AuthKeyPopup, {
       width: '500px',
-      data: {key: this.key}
+      data: {key: key.text}
     });
 
     dialogRef.afterClosed().subscribe(result => {
       console.log('The dialog was closed');
-      this.key = result;
-      console.log(this.key)
-      this.pylService.sendAuthKey(this.key);
+      key.text = result;
+      console.log(key.text);
+      this.pylService.sendAuthKey(key);
     });
   }
 }
@@ -38,6 +41,7 @@ export class AppSignInComponent implements OnInit {
 @Component({
   selector: 'auth-key-popup',
   templateUrl: 'AuthKeyPopup.html',
+  styleUrls: ['./app-sign-in.component.css']
 })
 export class AuthKeyPopup {
   key: string;
