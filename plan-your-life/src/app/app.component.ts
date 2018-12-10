@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { UserPromptComponent } from './user-prompt/user-prompt.component';
-import { SignInComponent } from './sign-in/sign-in.component'
+//import { SignInComponent } from './sign-in/sign-in.component'
 //import { UserPrompt } from './userprompt';
 
 @Component({
