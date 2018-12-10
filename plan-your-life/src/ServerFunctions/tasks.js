@@ -146,6 +146,7 @@ function getAccessToken(oAuth2Client, callback) {
         scope: SCOPES,
     });
     console.log('Authorize this app by visiting this url:', authUrl);
+    
     const rl = readline.createInterface({
         input: process.stdin,
         output: process.stdout,
