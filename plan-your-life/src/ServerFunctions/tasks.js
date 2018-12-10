@@ -1,9 +1,11 @@
+module.exports.newTask = newTask;
+
 const fs = require('fs');
 const readline = require('readline');
 const { google } = require('googleapis');
 
 // If modifying these scopes, delete token.json.
-const SCOPES = ['https://www.googleapis.com/auth/tasks'];
+const SCOPES = ['https://www.googleapis.com/auth/tasks', 'https://www.googleapis.com/auth/calendar'];
 const TOKEN_PATH = 'token.json';
 
 var task;
@@ -13,11 +15,7 @@ var taskData = {
     'notes': 'Me want cookie',
 }
 
-var tasklist = {
-    'title': 'New Task List',
-}
-
-newTask(taskData);
+var tasklist = {'title': 'A Task List'};
 
 /**
  * Wrapper function to list all taskslists and ids of taskslists.
@@ -36,7 +34,9 @@ function newTaskList (taskDetails) {
  * Wrapper function to insert task
  * @param taskDetails A JSON object holding taskdetails
  */
-function newTask (taskDetails) {
+function newTask (taskDetails, taskList) {
+    tasklist = taskList;
+    console.log(tasklist);
     fs.readFile('credentials.json', (err, content) => {
         task = taskDetails;
         if (err) return console.log('Error loading client secret file:', err);
@@ -133,6 +133,7 @@ function authorize(credentials, callback) {
     });
 }
 
+
 /**
  * Get and store new token after prompting for user authorization, and then
  * execute the given callback with the authorized OAuth2 client.
@@ -145,6 +146,7 @@ function getAccessToken(oAuth2Client, callback) {
         scope: SCOPES,
     });
     console.log('Authorize this app by visiting this url:', authUrl);
+    
     const rl = readline.createInterface({
         input: process.stdin,
         output: process.stdout,
@@ -163,4 +165,5 @@ function getAccessToken(oAuth2Client, callback) {
         });
     });
 }
+
 
