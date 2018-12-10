@@ -2,6 +2,8 @@ var express = require('express');
 
 var queryhandler = require('../../src/ServerFunctions/QueryHandler');
 var listHandler = require('../../src/ServerFunctions/ListHandler');
+var authKeyHandler = require('../../src/ServerFunctions/AuthKeyHandler');
+
 router = express.Router();
 
 
@@ -11,6 +13,12 @@ router.post('/newquery', function(req, res){
   console.log('response: ' + res);
   //res.send('reached api layer on new query. ' + res.body);
   }); 
+
+router.post('/newauthkey', function (req, res){
+  console.log('popup successfully called to api');
+  console.log(req);
+  authKeyHandler.authorizeUser(req.body, res);
+});
 
 router.get('/events', function(req, res){
   console.log('reached api layer for list retrieval.');

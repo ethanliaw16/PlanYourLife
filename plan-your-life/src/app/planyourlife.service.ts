@@ -19,6 +19,11 @@ export class PylService{
     //return response.unsubscribe;
   }
 
+  sendAuthKey(key: string): void{
+    var response = this.http.post<string>('http://localhost:8000/api/newauthkey', key).subscribe();
+    console.log(response);
+  }
+
   retrieveWordLists(): Observable<Event[]>{
     console.log('get events invoked.');
     return this.http.get<Event[]>('http://localhost:8000/api/events');

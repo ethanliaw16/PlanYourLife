@@ -1,0 +1,11 @@
+<h1 mat-dialog-title>Switch Users</h1>
+<div mat-dialog-content>
+  <p>Sign in to your google account at the given URL and paste the resulting code below.</p>
+  <mat-form-field>
+    <input matInput [(ngModel)]="data.key">
+  </mat-form-field>
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="onNoClick()">Cancel</button>
+  <button mat-button [mat-dialog-close]="data.key" cdkFocusInitial>Submit</button>
+</div>
