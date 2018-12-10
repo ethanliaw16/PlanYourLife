@@ -11,6 +11,12 @@ The Base project files are now in the repo. In order to run the project, you wil
 
 npm install -g @angular/cli
 
+npm install @angular/material
+
+npm install @angular/cdk
+
+npm install date
+
 You will also need to install express. Again, from the command line, enter the following:
 
 npm install express
