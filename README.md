@@ -10,8 +10,11 @@ https://docs.google.com/document/d/1RDNZM5eShtjVDoR9rvlogNUy1CO4kI2B6eduJAYLWy4/
 The Base project files are now in the repo. In order to run the project, you will need to install a few things. First, make sure you have node installed from online. Then, install angular from the terminal: 
 
 npm install -g @angular/cli
+
 npm install @angular/material
+
 npm install @angular/cdk
+
 npm install date
 
 You will also need to install express. Again, from the command line, enter the following:
