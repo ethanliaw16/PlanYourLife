@@ -14,7 +14,7 @@ const CREDENTIALS_PATH = 'credentials.json';
 //const { client_secret, client_id, redirect_uris } = CREDENTIALS.installed;
 //const oAuth2Client = new google.auth.OAuth2(client_id, client_secret, redirect_uris[0]);
 //const TOKEN = {"access_token":"ya29.GltTBnsTeJK9x4MtwhQmngziEL0Ta8VRfWM594X8kH73Zc2Mx6FEee8xmw7Q-CpIr5zaFqvTEcSq9EQzijaiGjvP9BCb2cQEw__1QFlE0q6ZKiGbefXmQ09u4Vo_","refresh_token":"1/uFSRO9tMyYtKfqcDDRO05H_DoMMoG9cuAkIpN3L0WvY","scope":"https://www.googleapis.com/auth/calendar","token_type":"Bearer","expiry_date":1542149690952};
-oAuth2Client.setCredentials(TOKEN);
+//oAuth2Client.setCredentials(TOKEN);
 
 //variables
 var event;
