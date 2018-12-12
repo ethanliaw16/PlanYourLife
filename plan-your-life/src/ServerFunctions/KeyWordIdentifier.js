@@ -158,6 +158,7 @@ Function that parses a 'remind' request to populate the corresponding JSON
 function remindRequest(){
 
 	foundTo = false; //boolean to determine if the first 'to' indicating the request is a remind request has been found
+	today = !keys.includes('on');
 
 	for(i = 1; i < keys.length; i++){
 		// if(keys[i] === 'remind'){ 
@@ -171,7 +172,7 @@ function remindRequest(){
 		} else if(keys[i] === 'on'){
 			time = convertDay(keyValues[i]);
 		} else if(keys[i] === 'at'){
-			time = keyValues[i];
+			time = insertHour(keyValues[i], today);
 		} else if(keys[i] === 'from'){
 			where = keyValues[i];
 		} else if(keys[i] === 'for'){
@@ -179,6 +180,77 @@ function remindRequest(){
 		} else {
 			// console.log('Out of key words');
 		}
+	}
+}
+
+/*
+Function that takes a given hour and inserts it into the date field
+*/
+function insertHour(insertTime, today){
+	var date = new Date();
+	var data = time.toString();
+	var splitData = data.split(' ');
+	var times = insertTime.split(':');
+	times.push('00');
+	if(today){
+		console.log(splitData);
+		var newDate = new Date(date.getFullYear(), date.getMonth(), date.getDate(), times[0], times[1], 0, 0);
+		console.log(newDate);
+		return newDate;
+	} else {
+		console.log(splitData);
+		console.log(splitData[1]);
+		var newDate = new Date(splitData[3], monthNum(splitData[1].toString()), splitData[2], times[0], times[1], 0, 0);
+		console.log(newDate);
+		return newDate;
+	}
+}
+
+/*
+Converts the given month into an equivalent numerical value. Jan = 0, Dec = 11.
+*/
+function monthNum(month){
+	switch(month){
+		case 'Jan':
+			return 0;
+			break;
+		case 'Feb':
+			return 1;
+			break;
+		case 'Mar':
+			return 2;
+			break;
+		case 'Apr':
+			return 3;
+			break;
+		case 'May':
+			return 4;
+			break;
+		case 'Jun':
+			return 5;
+			break;
+		case 'Jul':
+			return 6;
+			break;
+		case 'Aug':
+			return 7;
+			break;
+		case 'Sep':
+			return 8;
+			break;
+		case 'Oct':
+			return 9;
+			break;
+		case 'Nov':
+			return 10;
+			break;
+		case 'Dec':
+			return 11;
+			break;
+		default:
+			console.log(month === 'Dec');
+			throw new Error('Incorrect Month format');
+			break;
 	}
 }
 
@@ -270,3 +342,4 @@ function KWI(command){
 
 module.exports.KWI = KWI;
 module.exports.getNextDayOfWeek = getNextDayOfWeek;
+	
