@@ -52,57 +52,16 @@
 </head>
 
 	<body>
-   <!--
-      <li>
-        <button id="signin-button" onclick="handleSignInClick()">Sign In</button>
-        <button id="signout-button" onclick="handleSignOutClick()" style="visibility: hidden">Sign Out</button>
-      </li>
-      
-      <li>
-        <app-user-prompt></app-user-prompt>
-      </li>
-    -->
-    
-
+    <!--------------------- NAV BAR / FAQ --------------------->
     <nav class="navbar navbar-fixed-top">
       <div class="container-fluid">
-
-        <!--------------------- sign out --------------------->
-        <ul class="nav navbar-nav" id="nav1">
-            <li id="nav3">
-              
-              
-            </li>
-        </ul> 
-
-        
-
-        <!--------------------- sign in & faq --------------------->
         <ul class="nav navbar-nav navbar-right" id="nav1">
-
-           <!--------------------- Sign Out --------------------->
-          <script>
-              function signOut() {
-                var auth2 = gapi.auth2.getAuthInstance();
-                auth2.signOut().then(function () {
-                  console.log('User signed out.');
-                });
-              }
-            </script>
-
-            <li id="nav2">
-              <!-- <a href="#"><span class="glyphicon glyphicon-user"></span> Sign In</a> -->
-              <!-- <button type="sign" id="signin-button" onclick="handleSignInClick()">Button</button> -->
-              <div class="g-signin2" data-onsuccess="onSignIn"></div>
-            </li>
-
             <li id="nav3">
               <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#FAQ">  
                 <span class="glyphicon glyphicon-question-sign"></span> Help
               </button>
             </li>
           </ul>
-
         </div>
      </nav>
    
@@ -149,62 +108,7 @@
             </div>
         </div>
     </div>
-
-    
-    <!--------------------- SIGN IN DUMMY --------------------->
-    <div class="g-signin2" data-onsuccess="onSignIn" data-theme="dark"></div>
-
-    <script>
-      function onSignIn(googleUser) {
-        // Useful data for your client-side scripts:
-        var profile = googleUser.getBasicProfile();
-        console.log("ID: " + profile.getId()); // Don't send this directly to your server!
-        console.log('Full Name: ' + profile.getName());
-        console.log('Given Name: ' + profile.getGivenName());
-        console.log('Family Name: ' + profile.getFamilyName());
-        console.log("Image URL: " + profile.getImageUrl());
-        console.log("Email: " + profile.getEmail());
-
-        // The ID token you need to pass to your backend:
-        var id_token = googleUser.getAuthResponse().id_token;
-        console.log("ID Token: " + id_token);
-      };
-    </script>
-
-<script>
-  function signInCallback(authResult) {
-    if (authResult['code']) {
-  
-      // Hide the sign-in button now that the user is authorized, for example:
-      $('#signinButton').attr('style', 'display: none');
-  
-      // Send the code to the server
-      $.ajax({
-        type: 'POST',
-        url: 'http://example.com/storeauthcode',
-        // Always include an `X-Requested-With` header in every AJAX request,
-        // to protect against CSRF attacks.
-        headers: {
-          'X-Requested-With': 'XMLHttpRequest'
-        },
-        contentType: 'application/octet-stream; charset=utf-8',
-        success: function(result) {
-          // Handle or verify the server response.
-        },
-        processData: false,
-        data: authResult['code']
-      });
-    } else {
-      // There was an error.
-    }
-  }
-  </script>
   
   <script type="module" src="script.js"></script>
-
-  
-
-
-
 </body>
 </html>
