@@ -26,7 +26,6 @@ export class AppSignInComponent implements OnInit {
     var key = new Key();
     const dialogRef = this.dialog.open(AuthKeyPopup, {
       width: '500px',
-      height: '400px',
       data: {key: key.text}
     });
 
